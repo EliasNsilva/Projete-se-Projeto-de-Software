@@ -6,8 +6,8 @@ public class Atividade {
     public String descricao;
     public String data_inicio;
     public String data_final;
-    public Participante responsavel;
-    public ArrayList<Participante> profissionais;
+    public Usuario responsavel;
+    public ArrayList<Usuario> profissionais;
     public String tarefas[];
     
     public Atividade(int id, String descricao, String data_inicio, String data_final, String tarefas[]) {
