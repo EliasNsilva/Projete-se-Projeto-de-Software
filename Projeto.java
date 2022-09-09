@@ -9,7 +9,6 @@ public class Projeto {
     public Usuario coordenador;
     public ArrayList<Usuario> Usuarios;
     public ArrayList<Atividade> ativs;
-    //public ArrayList<String> bolsas;
     public String vigencia_bolsa;
     
     public Projeto(int id, String status, String descricao, String data_inicio, String data_final, Usuario coordenador,ArrayList<Usuario> Usuarios, String vigencia_bolsa) {
@@ -19,7 +18,6 @@ public class Projeto {
         this.data_inicio = data_inicio;
         this.data_final = data_final;
         this.coordenador = coordenador;
-        //this.bolsas = bolsas;
         this.Usuarios = Usuarios;
         this.vigencia_bolsa = vigencia_bolsa;
     }

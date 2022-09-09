@@ -47,7 +47,7 @@ public class Sistema {
 
         ArrayList<Usuario> part_proj = addUsuario(Usuarios);
         
-        Projeto pj = new Projeto(1, "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, "1 ano");
+        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, "1 ano");
 
         projetos.add(pj);
 
@@ -72,15 +72,47 @@ public class Sistema {
         return part;
     }
 
-    public static Usuario buscaPorCpf(String cpf, ArrayList<Usuario> Usuarios){
-        for (Usuario i : Usuarios){
-            if (i.getCpf().equals(cpf)){
-                return i;
-            }
-        }
-        return null;
+    public static Atividade criarAtividades(Projeto proj, ArrayList<Usuario> Usuarios) {
+        System.out.print("Digite o descrição: ");
+        String desc = input.next();
+        
+        System.out.print("Insira a data de início da atividade: ");
+        String dt_inicio = input.next();
+
+        System.out.print("Insira a data de termino da atividade: ");
+        String dt_final = input.next();
+
+        System.out.print("Insira o cpf do responsavel pela atividade: ");
+        String resp_cpf = input.next();
+        Usuario resp= buscaPorCpf(resp_cpf, Usuarios);
+
+        ArrayList<Usuario> profs = addUsuario(Usuarios);
+
+        ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
+
+        Atividade part = new Atividade(proj.ativs.size(), desc, dt_inicio, dt_final, resp, tarefas, profs);
+
+        return part;
     }
 
+    public static ArrayList<Tarefas> addTarefas(ArrayList<Usuario> Usuarios){
+        ArrayList<Tarefas> tarefas = new ArrayList<Tarefas>();
+        System.out.print("Digite o quantas tarefas seram inseridas: ");
+        int n = input.nextInt();
+
+        for(int i = 0; i < n; i++){
+            System.out.print("Digite o descrição: ");
+            String desc = input.next();
+
+            System.out.print("Digite o cpf da pessoa que realizará a tarefa: ");
+            String cpf = input.next();
+
+            Tarefas tf = new Tarefas(desc, cpf); 
+            tarefas.add(tf);
+        }
+        return tarefas;
+    }
+    
     public static ArrayList<Usuario> addUsuario(ArrayList<Usuario> Usuarios){
         ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
         System.out.print("Digite o quantos Usuarios seram inseridos: ");
@@ -92,6 +124,15 @@ public class Sistema {
             part_proj.add(part);
         }
         return part_proj;
+    }
+    
+    public static Usuario buscaPorCpf(String cpf, ArrayList<Usuario> Usuarios){
+        for (Usuario i : Usuarios){
+            if (i.getCpf().equals(cpf)){
+                return i;
+            }
+        }
+        return null;
     }
 
     public static void exibirProjetos(ArrayList<Projeto> projetos){

@@ -9,10 +9,15 @@ public class Usuario {
         this.senha = senha;
         this.nome = nome;
         this.cargo = cargo;
-
     }
 
     public String getCpf(){
         return cpf;
+    }
+    public String getNome(){
+        return nome;
+    }
+    public String getCargo(){
+        return cargo;
     }
 }
