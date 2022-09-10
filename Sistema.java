@@ -15,16 +15,20 @@ public class Sistema {
             switch (i) {
                 case "1":
                     System.out.println("Insira as informação para criar um usuário");
-                    criarUsuario();
+                    criarUsuario(Usuarios);
                     break;
                 case "2":
                     user = login(Usuarios);
                     break;
                 case "3":
-                    if(user.cargo == "coordenador"){
-                        criarProjeto(projetos, Usuarios);
-                    }
-                    break;
+                    // if(user.getCargo().equals("coordenador")){
+                    //     criarProjeto(projetos, Usuarios);
+                    // }
+                    // else{
+                    //     System.out.println("Somente coordenadores podem criar projetos"); // É ISSO MESMO?
+                    // }
+                    // break;
+                    criarProjeto(projetos, Usuarios);
                 default:
                     break;
             }
@@ -46,15 +50,17 @@ public class Sistema {
         Usuario coordenador= buscaPorCpf(coordenador_cpf, Usuarios);
 
         ArrayList<Usuario> part_proj = addUsuario(Usuarios);
+
+        ArrayList<Atividade> ativ_proj = addAtividades(Usuarios);
         
-        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, "1 ano");
+        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, ativ_proj,"1 ano");
 
         projetos.add(pj);
 
         exibirProjetos(projetos);
     }
 
-    public static Usuario criarUsuario() {
+    public static Usuario criarUsuario(ArrayList<Usuario> Usuarios) {
         System.out.print("Digite o cpf: ");
         String cpf = input.next();
         
@@ -67,12 +73,16 @@ public class Sistema {
         System.out.printf("Digite o cargo: ");
         String cargo = input.next();
 
-        Usuario part = new Usuario(cpf, senha, nome, cargo);
+        System.out.printf("Digite o valor da bolsa: ");
+        String bolsa = input.next();
+
+        Usuario part = new Usuario(cpf, senha, nome, cargo, bolsa);
+        Usuarios.add(part);
 
         return part;
     }
 
-    public static Atividade criarAtividades(Projeto proj, ArrayList<Usuario> Usuarios) {
+    public static Atividade criarAtividades(ArrayList<Atividade> atividades, ArrayList<Usuario> Usuarios) {
         System.out.print("Digite o descrição: ");
         String desc = input.next();
         
@@ -90,11 +100,37 @@ public class Sistema {
 
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
 
-        Atividade part = new Atividade(proj.ativs.size(), desc, dt_inicio, dt_final, resp, tarefas, profs);
+        Atividade ativ = new Atividade(atividades.size(), desc, dt_inicio, dt_final, resp, tarefas, profs);
 
-        return part;
+        return ativ;
     }
 
+    
+    public static ArrayList<Usuario> addUsuario(ArrayList<Usuario> Usuarios){
+        ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
+        System.out.print("Digite o quantos Usuarios seram inseridos: ");
+        int n = input.nextInt();
+        for(int i = 0; i < n; i++){
+            System.out.print("Digite o cpf do Usuario: ");
+            String part_cpf = input.next();
+            Usuario part = buscaPorCpf(part_cpf, Usuarios);
+            part_proj.add(part);
+        }
+        return part_proj;
+    }
+
+    public static ArrayList<Atividade> addAtividades(ArrayList<Usuario> Usuarios){
+        ArrayList<Atividade> ativ_proj = new ArrayList<Atividade>();
+        System.out.print("Digite o quantas atividades seram inseridas: ");
+        int n = input.nextInt();
+
+        for(int i = 0; i < n; i++){
+            Atividade ativ = criarAtividades(ativ_proj, Usuarios);
+            ativ_proj.add(ativ);
+        }
+        return ativ_proj;
+    }
+    
     public static ArrayList<Tarefas> addTarefas(ArrayList<Usuario> Usuarios){
         ArrayList<Tarefas> tarefas = new ArrayList<Tarefas>();
         System.out.print("Digite o quantas tarefas seram inseridas: ");
@@ -112,20 +148,7 @@ public class Sistema {
         }
         return tarefas;
     }
-    
-    public static ArrayList<Usuario> addUsuario(ArrayList<Usuario> Usuarios){
-        ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
-        System.out.print("Digite o quantos Usuarios seram inseridos: ");
-        int n = input.nextInt();
-        for(int i = 0; i < n; i++){
-            System.out.print("Digite o cpf do Usuario: ");
-            String part_cpf = input.next();
-            Usuario part = buscaPorCpf(part_cpf, Usuarios);
-            part_proj.add(part);
-        }
-        return part_proj;
-    }
-    
+
     public static Usuario buscaPorCpf(String cpf, ArrayList<Usuario> Usuarios){
         for (Usuario i : Usuarios){
             if (i.getCpf().equals(cpf)){
@@ -149,7 +172,6 @@ public class Sistema {
         System.out.print("Digite o cpf: ");
         String loginCpf = input.next();
         
-        
         Usuario user = buscaPorCpf(loginCpf, Usuarios);
         
         if(user == null){
@@ -159,6 +181,7 @@ public class Sistema {
         else{
             System.out.print("Digite o senha: ");
             String loginSenha = input.next();
+            //String senha = new String(user.senha);
             if(loginSenha.equals(user.senha)){
                 return user;
             }
