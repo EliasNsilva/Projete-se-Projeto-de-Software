@@ -5,11 +5,11 @@ public class Usuario {
     public String cargo;
     public String bolsa;
     
-    public Usuario(String cpf, String nome, String cargo, String senha, String bolsa) {
+    public Usuario(String cpf, String senha, String nome, String cargo, String bolsa) {
         this.cpf = cpf;
         this.senha = senha;
-        this.nome = nome;
         this.cargo = cargo;
+        this.nome = nome;
         this.bolsa = bolsa;
     }
 
@@ -21,5 +21,9 @@ public class Usuario {
     }
     public String getCargo(){
         return cargo;
+    }
+
+    public void atualizarSenha(String senha){
+        this.senha = senha;
     }
 }
