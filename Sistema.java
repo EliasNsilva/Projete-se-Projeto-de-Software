@@ -5,19 +5,19 @@ import java.util.ArrayList;
 // 1) Permitir a criação e remoção de informações referentes aos projetos,
 // atividades e usuários. OK
 // 2) Permitir a edição de informações referentes aos projetos, atividades e
-// usuários.
+// usuários. OK
 // 3) Permitir a associação de usuários aos projetos e atividades, e vice-versa. OK
 // 4) Permitir a alteração do status OK
-//  • “Em processo de criação” para “Iniciado”. O coordenador deve poder iniciar
-// uma criação apenas se constarem todas as informações básicas.
-//  • “Iniciado” para “Em andamento”. O coordenador deve poder confirmar a
-// alocação.
-//  • “Em andamento” para “Concluído”. O coordenador deve poder alterar o
-// status para “Concluído”, se existir a descrição do projeto e atividades.
+    //  • “Em processo de criação” para “Iniciado”. O coordenador deve poder iniciar
+    // uma criação apenas se constarem todas as informações básicas.
+    //  • “Iniciado” para “Em andamento”. O coordenador deve poder confirmar a
+    // alocação.
+    //  • “Em andamento” para “Concluído”. O coordenador deve poder alterar o
+    // status para “Concluído”, se existir a descrição do projeto e atividades.
 // 5) Permitir as seguintes consultas: OK
-//  • Consulta por usuário;
-//  • Consulta por projeto;
-//  • Consulta por atividade;
+    //  • Consulta por usuário;
+    //  • Consulta por projeto;
+    //  • Consulta por atividade;
 // 6) O sistema deve fornecer um relatório de projeto e atividades da unidade
 // acadêmica. OK
 // 7) O sistema deve permitir o intercambio de usuários entre projetos para
@@ -58,13 +58,10 @@ public class Sistema {
                             criarUsuario(Usuarios);
                             break;
                         case "2":
-                            // if(user.getCargo().equals("coordenador")){
-                            //     criarProjeto(projetos, Usuarios);
-                            // }
-                            // else{
-                            //     System.out.println("Somente coordenadores podem criar projetos"); // É ISSO MESMO?
-                            // }
-                            // break;
+                            if(user == null){
+                                System.out.println("Por favor, faça login para continuar");
+                                break;
+                            }
                             if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
                                 System.out.println("Sem permissão!");
                                 break;
@@ -98,7 +95,23 @@ public class Sistema {
                     break;
                 case "2":
                     System.out.println("\n#########################\n");
+                    System.out.println("O que você deseja editar?\n");
+                    System.out.println("1- Projeto\n2- Atividade\n3- Usuário");
+                    String j = input.next();
 
+                    switch (j){
+                        case "1":
+                            editarProjeto(projetos);
+                            break;
+                        case "2":
+                            editarAtividade(projetos);
+                            break;
+                        case "3":
+                            editarUsuario(Usuarios);
+                            break;
+                        default:
+                            break;
+                    }
                     System.out.println("\n#########################\n");
                     break;
                 case "3":
@@ -163,7 +176,7 @@ public class Sistema {
                     String l = input.next();
                     switch (l) {
                         case "1":
-                            consultaProj(projetos); 
+                            consultaProj(projetos, Usuarios); 
                             break;
                         case "2":
                             consultaAtiv(projetos);
@@ -301,7 +314,7 @@ public class Sistema {
 
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
 
-        Atividade ativ = new Atividade(atividades.size(), desc, dt_inicio, dt_final, resp, tarefas, profs);
+        Atividade ativ = new Atividade(atividades.size(), "Em andamento", desc, dt_inicio, dt_final, resp, tarefas, profs);
 
         return ativ;
     }
@@ -424,52 +437,150 @@ public class Sistema {
         return null;
     }
 
-    public static void consultaProj(ArrayList<Projeto> projetos){
-        System.out.println("Qual projeto deseja vizualizar?\n");
+    public static void consultaProj(ArrayList<Projeto> projetos, ArrayList<Usuario> usuarios){
+        String campo;
+        
+        System.out.println("Qual por qual campo deseja buscar?\n");
+        System.out.println("1- Status\n2- Coordenador");
+        String i = input.next();
+        
+        switch (i) {
+            case "1":
+                System.out.println("Opções: Em processo de criação, Iniciado, Em andamento, Concluído.");
+                String res1 = input.next();
+                campo = res1;
 
-        for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+                for(Projeto proj: projetos){
+                    if(proj.status.equals(campo)){
+                        System.out.printf("Descrição : %s\n", proj.descricao);
+                        System.out.printf("Status : %s\n", proj.status);
+                        System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
+                        System.out.printf("Data de termino : %s\n", proj.data_final);
+                        System.out.printf("Coordenador do projeto %s", proj.coordenador.nome);
+                    }
+                }
+                break;
+            case "2":
+                System.out.print("Insira o cpf do coordenador:");
+                String res2 = input.next();
+
+                for(Projeto proj: projetos){
+                    if(proj.coordenador.getCpf().equals(res2)){
+                        System.out.printf("Descrição : %s\n", proj.descricao);
+                        System.out.printf("Status : %s\n", proj.status);
+                        System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
+                        System.out.printf("Data de termino : %s\n", proj.data_final);
+                        System.out.printf("Coordenador do projeto %s", proj.coordenador.nome);
+                    }
+                }
+                break;
+            default:
+                break;
         }
-
-        int res = input.nextInt();
-        Projeto proj = projetos.get(res);
-
-        System.out.printf("Descrição : %s\n", proj.descricao);
-        System.out.printf("Status : %s\n", proj.status);
-        System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
-        System.out.printf("Data de termino : %s\n", proj.data_final);
-        System.out.printf("Coordenador do projeto %s", proj.coordenador.nome);
     }
 
 
     public static void consultaAtiv(ArrayList<Projeto> projetos){
-        System.out.println("Qual projeto a ativade pertence?\n");
-
+        String campo;
+        System.out.print("A qual projeto a atividade pertence?");
+        
         for(Projeto i: projetos){
             System.out.printf("%d- %s\n", i.id, i.descricao);
         }
-
-        int res = input.nextInt();
-        Projeto proj = projetos.get(res);
         
-        System.out.println("Atividades do projeto:");
-        for(Atividade i: proj.ativs){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+        int i = input.nextInt();
+        Projeto proj = projetos.get(i);
+
+        System.out.println("Qual por qual campo deseja buscar?\n");
+        System.out.println("1- Status\n2- Responsável");
+        String j = input.next();
+
+        switch (j) {
+            case "1":
+                System.out.println("Opções: Em andamento, Concluído.");
+                String res1 = input.next();
+                campo = res1;
+
+                for(Atividade ativ: proj.ativs){
+                    if(ativ.status.equals(campo)){
+                        System.out.printf("Status: %s", ativ.status);
+                        System.out.printf("Descrição: %s", ativ.descricao);
+                        System.out.printf("Data de Inicio : %s\n", ativ.data_inicio);
+                        System.out.printf("Data de termino : %s\n", ativ.data_final);
+                        System.out.printf("Responsável %s\n", ativ.responsavel.nome);
+                    }
+                }
+                break;
+            case "2":
+                System.out.print("Insira o cpf do responsável:");
+                String res2 = input.next();
+
+                for(Atividade ativ: proj.ativs){
+                    if(ativ.responsavel.getCpf().equals(res2)){
+                        System.out.printf("Status: %s", ativ.status);
+                        System.out.printf("Descrição: %s", ativ.descricao);
+                        System.out.printf("Data de Inicio : %s\n", ativ.data_inicio);
+                        System.out.printf("Data de termino : %s\n", ativ.data_final);
+                        System.out.printf("Responsável %s\n", ativ.responsavel.nome);
+                    }
+                }
+                break;
+            default:
+                break;
         }
-
-        System.out.println("Qual atividade deseja vizualizar?");
-
-        res = input.nextInt();
-        Atividade ativ = proj.ativs.get(res);
-
-        System.out.printf("Status: %s", ativ.status);
-        System.out.printf("Descrição: %s", ativ.descricao);
-        System.out.printf("Data de Inicio : %s\n", ativ.data_inicio);
-        System.out.printf("Data de termino : %s\n", ativ.data_final);
-        System.out.printf("Responsável %s\n", ativ.responsavel.nome);
     }
 
     public static void consultaUsu(ArrayList<Usuario> usuarios){
+        String campo;
+        
+        System.out.println("Qual por qual campo deseja buscar?\n");
+        System.out.println("1- Nome\n2- Cargo\n3-CPF");
+        String i = input.next();
+        
+        switch (i) {
+            case "1":
+                System.out.print("Insira o nome:");
+                String res1 = input.next();
+                campo = res1;
+
+                for(Usuario user: usuarios){
+                    if(user.nome.equals(campo)){
+                        System.out.printf("Nome : %s\n", user.nome);
+                        System.out.printf("CPF : %s\n", user.cpf);
+                        System.out.printf("Cargo : %s\n", user.cargo);
+                    }
+                }
+                break;
+            case "2":
+                System.out.println("Opções: Aluno de Graduação, Aluno de mestrado, Aluno de doutorado, Professoror, Pesquisador, Desenvolvedor, Testador, Analista, Técnico");
+                System.out.print("Insira o Cargo:");
+                String res2 = input.next();
+                campo = res2;
+
+                for(Usuario user: usuarios){
+                    if(user.cargo.equals(campo)){
+                        System.out.printf("Nome : %s\n", user.nome);
+                        System.out.printf("CPF : %s\n", user.cpf);
+                        System.out.printf("Cargo : %s\n", user.cargo);
+                    }
+                }
+                break;
+            case "3":
+                System.out.print("Insira o CPF:");
+                String res3 = input.next();
+                campo = res3;
+
+                for(Usuario user: usuarios){
+                    if(user.cpf.equals(campo)){
+                        System.out.printf("Nome : %s\n", user.nome);
+                        System.out.printf("CPF : %s\n", user.cpf);
+                        System.out.printf("Cargo : %s\n", user.cargo);
+                    }
+                }
+                break;
+            default:
+                break;
+        }
         System.out.println("Qual cpf do usuário que deseja vizualizar?");
 
         String res = input.next();
@@ -586,13 +697,163 @@ public class Sistema {
         }
     }
 
+    public static void editarProjeto(ArrayList<Projeto> projetos){
+        System.out.println("Qual projeto deseja editar?\n");
+
+        for(Projeto p: projetos){
+            System.out.printf("%d- %s\n", p.id, p.descricao);
+        }
+        int p = input.nextInt();
+        Projeto proj = projetos.get(p);
+
+        System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
+        String j = input.next();
+        switch (j) {
+            case "1":
+                System.out.println("Mudar descrição:");
+                String res1 = input.next();
+                proj.setDescricao(res1);
+                break;
+            case "2":
+                System.out.println("Mudar Data inicio:");
+                String res2 = input.next();
+                proj.setDataInicio(res2);
+                break;
+            case "3":
+                System.out.println("Mudar Data final:");
+                String res3 = input.next();
+                proj.setDataFinal(res3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void editarAtividade(ArrayList<Projeto> projetos){
+        System.out.println("Qual projeto a atividade pertence?\n");
+
+        for(Projeto i: projetos){
+            System.out.printf("%d- %s\n", i.id, i.descricao);
+        }
+
+        int res = input.nextInt();
+        Projeto proj = projetos.get(res);
+
+        System.out.println("Qual atividade deseja editar?\n");
+        for(Atividade i: proj.ativs){
+            System.out.printf("%d- %s\n", i.id, i.descricao);
+        }
+
+        int ativ_res = input.nextInt();
+        Atividade ativ = proj.ativs.get(ativ_res);
+
+        System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
+        String j = input.next();
+        switch (j) {
+            case "1":
+                System.out.println("Mudar descrição:");
+                String res1 = input.next();
+                ativ.setDescricao(res1);
+                break;
+            case "2":
+                System.out.println("Mudar Data inicio:");
+                String res2 = input.next();
+                ativ.setDataInicio(res2);
+                break;
+            case "3":
+                System.out.println("Mudar Data final:");
+                String res3 = input.next();
+                ativ.setDataFinal(res3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void editarUsuario(ArrayList<Projeto> projetos, ArrayList<Usuario> Usuarios){
+        System.out.println("Qual projeto a atividade pertence?\n");
+
+        for(Projeto i: projetos){
+            System.out.printf("%d- %s\n", i.id, i.descricao);
+        }
+
+        int res = input.nextInt();
+        Projeto proj = projetos.get(res);
+
+        System.out.println("Qual atividade deseja editar?\n");
+        for(Atividade i: proj.ativs){
+            System.out.printf("%d- %s\n", i.id, i.descricao);
+        }
+
+        int ativ_res = input.nextInt();
+        Atividade ativ = proj.ativs.get(ativ_res);
+
+        System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
+        String j = input.next();
+        switch (j) {
+            case "1":
+                System.out.println("Mudar descrição:");
+                String res1 = input.next();
+                ativ.setDescricao(res1);
+                break;
+            case "2":
+                System.out.println("Mudar Data inicio:");
+                String res2 = input.next();
+                ativ.setDataInicio(res2);
+                break;
+            case "3":
+                System.out.println("Mudar Data final:");
+                String res3 = input.next();
+                ativ.setDataFinal(res3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void editarUsuario(ArrayList<Usuario> Usuarios){
+        System.out.print("Digite o cpf do usuário: ");
+        String loginCpf = input.next();
+
+        Usuario user = buscaPorCpf(loginCpf, Usuarios);
+        
+        if(user == null){
+            System.out.println("Usuário não encontrado, tente novamente");
+        }else{
+            System.out.println("Qual campo deseja editar?\n1- Nome\n2- Cargo\n3- CPF");
+        
+        String i = input.next();
+
+        switch (i) {
+            case "1":
+                System.out.println("Mudar Nome:");
+                String res1 = input.next();
+                user.setNome(res1);
+                break;
+            case "2":
+                System.out.println("Mudar Nome:");
+                String res2 = input.next();
+                user.setCargo(res2);
+                break;
+            case "3":
+                System.out.println("Mudar CPF:");
+                String res3 = input.next();
+                user.setCpf(res3);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+
     public static void relatorio(ArrayList<Projeto> projetos){
         System.out.println("\n############ Relatório de projetos ############\n\n");
         
         for(Projeto proj: projetos){
             System.out.printf("Projeto %d\n", proj.id);
             System.out.printf("Descrição : %s\n", proj.descricao);
-            System.out.printf("Status : %s\n", proj.status);
+            System.out.printf("Status : %s\n",proj.status);
             System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
             System.out.printf("Data de termino : %s\n", proj.data_final);
             System.out.printf("Coordenador do projeto %s\n", proj.coordenador.nome);

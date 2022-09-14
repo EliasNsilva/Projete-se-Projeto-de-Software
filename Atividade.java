@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Atividade {
     public int id;
-    public int status;
+    public String status;
     public String descricao;
     public String data_inicio;
     public String data_final;
@@ -10,8 +10,9 @@ public class Atividade {
     public ArrayList<Usuario> profissionais;
     public ArrayList<Tarefas> tarefas;
     
-    public Atividade(int id, String descricao, String data_inicio, String data_final, Usuario responsavel, ArrayList<Tarefas> tarefas, ArrayList<Usuario> profissionais) {
+    public Atividade(int id, String status, String descricao, String data_inicio, String data_final, Usuario responsavel, ArrayList<Tarefas> tarefas, ArrayList<Usuario> profissionais) {
         this.id = id;
+        this.status = status;
         this.descricao = descricao;
         this.data_inicio = data_inicio;
         this.data_final = data_final;
@@ -28,5 +29,15 @@ public class Atividade {
     }
     public String getDataFinal(){
         return data_final;
+    }
+
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+    public void setDataFinal(String data_final){
+        this.data_final = data_final;
+    }
+    public void setDataInicio(String data_inicio){
+        this.data_inicio = data_inicio;
     }
 }

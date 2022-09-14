@@ -23,4 +23,13 @@ public class Projeto {
         this.vigencia_bolsa = vigencia_bolsa;
     }
 
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
+    }
+    public void setDataFinal(String data_final){
+        this.data_final = data_final;
+    }
+    public void setDataInicio(String data_inicio){
+        this.data_inicio = data_inicio;
+    }
 }

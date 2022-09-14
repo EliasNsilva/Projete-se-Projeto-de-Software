@@ -26,4 +26,14 @@ public class Usuario {
     public void atualizarSenha(String senha){
         this.senha = senha;
     }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    public void setCargo(String cargo){
+        this.cargo = cargo;
+    }
+    public void setCpf(String cpf){
+        this.cpf = cpf;
+    }
 }
