@@ -9,9 +9,10 @@ public class Projeto {
     public Usuario coordenador;
     public ArrayList<Usuario> Usuarios;
     public ArrayList<Atividade> ativs;
+    public int[] bolsas;
     public String vigencia_bolsa;
     
-    public Projeto(int id, String status, String descricao, String data_inicio, String data_final, Usuario coordenador,ArrayList<Usuario> Usuarios, ArrayList<Atividade> ativs, String vigencia_bolsa) {
+    public Projeto(int id, String status, String descricao, String data_inicio, String data_final, Usuario coordenador,ArrayList<Usuario> Usuarios, ArrayList<Atividade> ativs, int[] bolsas,String vigencia_bolsa) {
         this.id = id;
         this.status = status;
         this.descricao = descricao;
@@ -20,6 +21,7 @@ public class Projeto {
         this.coordenador = coordenador;
         this.Usuarios = Usuarios;
         this.ativs = ativs;
+        this.bolsas = bolsas;
         this.vigencia_bolsa = vigencia_bolsa;
     }
 

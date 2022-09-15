@@ -21,9 +21,9 @@ import java.util.ArrayList;
 // 6) O sistema deve fornecer um relatório de projeto e atividades da unidade
 // acadêmica. OK
 // 7) O sistema deve permitir o intercambio de usuários entre projetos para
-// realização de atividades.
+// realização de atividades. ok 
 // 8) O sistema deve suportar o gerenciamento de pagamento de bolsas para os
-// usuários.
+// usuários. ok 
 // 9) O sistema deve suportar controle de acesso através de usuário e senha com
 // possibilidade para recuperação de senha; OK
 // 10) Permitir operações de undo e redo de informações referentes aos projetos,
@@ -69,6 +69,14 @@ public class Sistema {
                             criarProjeto(projetos, Usuarios);
                             break;
                         case "3":
+                            if(user == null){
+                                System.out.println("Por favor, faça login para continuar");
+                                break;
+                            }
+                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                                System.out.println("Sem permissão!");
+                                break;
+                            }
                             System.out.println("O que você deseja remover?\n");
                             System.out.println("1- Projeto\n2- Atividade\n3- Tarefa");
                             String j = input.next();
@@ -101,12 +109,32 @@ public class Sistema {
 
                     switch (j){
                         case "1":
+                            if(user == null){
+                                System.out.println("Por favor, faça login para continuar");
+                                break;
+                            }
+                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                                System.out.println("Sem permissão!");
+                                break;
+                            }
                             editarProjeto(projetos);
                             break;
                         case "2":
+                            if(user == null){
+                                System.out.println("Por favor, faça login para continuar");
+                                break;
+                            }
+                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                                System.out.println("Sem permissão!");
+                                break;
+                            }
                             editarAtividade(projetos);
                             break;
                         case "3":
+                            if(user == null){
+                                System.out.println("Por favor, faça login para continuar");
+                                break;
+                            }
                             editarUsuario(Usuarios);
                             break;
                         default:
@@ -115,6 +143,14 @@ public class Sistema {
                     System.out.println("\n#########################\n");
                     break;
                 case "3":
+                    if(user == null){
+                        System.out.println("Por favor, faça login para continuar");
+                        break;
+                    }
+                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                        System.out.println("Sem permissão!");
+                        break;
+                    }
                     System.out.println("\n#########################\n");
                     System.out.println("1- Associar projeto\n2- Associar atividade");
                     int associar = input.nextInt();
@@ -126,6 +162,11 @@ public class Sistema {
                     System.out.println("\n#########################\n");
                     break;
                 case "4":
+                    if(user == null){
+                        System.out.println("Por favor, faça login para continuar");
+                        break;
+                    }
+
                     System.out.println("\n#########################\n");
                     System.out.println("De qual projeto deseja alterar o status?");
                     for(Projeto k: projetos){
@@ -195,11 +236,29 @@ public class Sistema {
                     System.out.println("\n#########################\n");
                     break;
                 case "7":
+                    if(user == null){
+                        System.out.println("Por favor, faça login para continuar");
+                        break;
+                    }
+                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                        System.out.println("Sem permissão!");
+                        break;
+                    }
                     System.out.println("\n#########################\n");
+                    intercambio(projetos);
                     System.out.println("\n#########################\n");
                     break;
                 case "8":
+                    if(user == null){
+                        System.out.println("Por favor, faça login para continuar");
+                        break;
+                    }
+                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                        System.out.println("Sem permissão!");
+                        break;
+                    }
                     System.out.println("\n#########################\n");
+                    bolsas(projetos);
                     System.out.println("\n#########################\n");
                     break;
                 case "9":
@@ -217,26 +276,33 @@ public class Sistema {
         }
     }
 
+    
     public static void criarProjeto(ArrayList<Projeto> projetos, ArrayList<Usuario> Usuarios) {
         System.out.print("Insira a descrição do projeto: ");
         String descricao = input.next( );
-
+        
         System.out.print("Insira a data de início do projeto: ");
         String data_inicio = input.next();
-
+        
         System.out.print("Insira a data de termino do projeto: ");
         String data_final = input.next();
-
+        
         System.out.print("Insira o cpf do coordenador do projeto: ");
         String coordenador_cpf = input.next();
         Usuario coordenador= buscaPorCpf(coordenador_cpf, Usuarios);
-
-        ArrayList<Usuario> part_proj = addUsuario(Usuarios);
-
-        ArrayList<Atividade> ativ_proj = addAtividades(Usuarios);
         
-        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, ativ_proj,"1 ano");
+        ArrayList<Usuario> part_proj = addUsuario(Usuarios);
+        part_proj.add(coordenador);
+        
+        ArrayList<Atividade> ativ_proj = addAtividades(part_proj);
 
+        int[] bolsas = definirBolsa();
+
+        System.out.print("Qual a vigencia das bolsas? ");
+        String vigencia = input.next();
+        
+        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, ativ_proj, bolsas, vigencia);
+        
         projetos.add(pj);
     }
 
@@ -252,12 +318,12 @@ public class Sistema {
         
         System.out.printf("Qual seu cargo?:\n");
         System.out.println("1- Aluno de Graduação\n2- Aluno de mestrado\n3- Aluno de doutorado");
-        System.out.println("4- Professoror\n5- Pesquisador\n6- Desenvolvedor\n7- Testador\n8- Analista\n9- Técnico");
+        System.out.println("4- Professor\n5- Pesquisador\n6- Desenvolvedor\n7- Testador\n8- Analista\n9- Técnico");
         String cargo = input.next();
-
+        
         switch (cargo) {
             case "1":
-                cargo = "Aluno de Graduação";
+            cargo = "Aluno de Graduação";
                 break;
             case "2":
                 cargo = "Aluno de mestrado";
@@ -287,13 +353,55 @@ public class Sistema {
                 break;
         }
 
-        System.out.printf("Digite o valor da bolsa ou zero caso não tenha: ");
-        String bolsa = input.next();
-
-        Usuario part = new Usuario(cpf, senha, nome, cargo, bolsa);
+        Usuario part = new Usuario(cpf, senha, nome, cargo);
         Usuarios.add(part);
 
         return part;
+    }
+
+    public static int[] definirBolsa(){
+
+        int[] bolsas= new int[9];
+
+        System.out.println("Defina o valor das bolsas de cada profissional");
+        
+        System.out.print("Aluno de Graduação: ");
+        int valor = input.nextInt();
+        bolsas[0] = valor;
+
+        System.out.print("Aluno de mestrado: ");
+        valor = input.nextInt();
+        bolsas[1] = valor;
+
+        System.out.print("Aluno de doutorado: ");
+        valor = input.nextInt();
+        bolsas[2] = valor;
+
+        System.out.print("Professor: ");
+        valor = input.nextInt();
+        bolsas[3] = valor;
+
+        System.out.print("Pesquisador: ");
+        valor = input.nextInt();
+        bolsas[4] = valor;
+
+        System.out.print("Desenvolvedor: ");
+        valor = input.nextInt();
+        bolsas[5] = valor;
+
+        System.out.print("Testador: ");
+        valor = input.nextInt();
+        bolsas[6] = valor;
+
+        System.out.print("Analista: ");
+        valor = input.nextInt();
+        bolsas[7] = valor;
+
+        System.out.print("Técnico: ");
+        valor = input.nextInt();
+        bolsas[8] = valor;
+
+        return bolsas;
     }
 
     public static Atividade criarAtividades(ArrayList<Atividade> atividades, ArrayList<Usuario> Usuarios) {
@@ -308,9 +416,10 @@ public class Sistema {
 
         System.out.print("Insira o cpf do responsavel pela atividade: ");
         String resp_cpf = input.next();
-        Usuario resp= buscaPorCpf(resp_cpf, Usuarios);
+        Usuario resp = buscaPorCpf(resp_cpf, Usuarios);
 
         ArrayList<Usuario> profs = addUsuario(Usuarios);
+        profs.add(resp);
 
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
 
@@ -328,6 +437,7 @@ public class Sistema {
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();
             Usuario part = buscaPorCpf(part_cpf, Usuarios);
+
             part_proj.add(part);
         }
         return part_proj;
@@ -534,12 +644,12 @@ public class Sistema {
         String campo;
         
         System.out.println("Qual por qual campo deseja buscar?\n");
-        System.out.println("1- Nome\n2- Cargo\n3-CPF");
+        System.out.println("1- Nome\n2- Cargo\n3- CPF");
         String i = input.next();
         
         switch (i) {
             case "1":
-                System.out.print("Insira o nome:");
+                System.out.print("Insira o nome: ");
                 String res1 = input.next();
                 campo = res1;
 
@@ -581,7 +691,7 @@ public class Sistema {
             default:
                 break;
         }
-        System.out.println("Qual cpf do usuário que deseja vizualizar?");
+        System.out.print("Qual cpf do usuário que deseja vizualizar?");
 
         String res = input.next();
         Usuario user = buscaPorCpf(res, usuarios);
@@ -641,22 +751,22 @@ public class Sistema {
         int escolha = input.nextInt();
 
         if (escolha == 1) {       
-            System.out.print("Digite o cpf do Usuario: ");
-            String part_cpf = input.next();
-            Usuario user = buscaPorCpf(part_cpf, usuarios);
-
-            if(user == null){
-                System.out.println("Usuário não encontrado");
-            }
             System.out.println("Qual projeto a atividade pertence?\n");
 
             for(Projeto i: projetos){
                 System.out.printf("%d- %s\n", i.id, i.descricao);
             }
-        
             int res = input.nextInt();
             Projeto proj = projetos.get(res);
 
+            System.out.print("Digite o cpf do Usuario: ");
+            String part_cpf = input.next();
+            Usuario user = buscaPorCpf(part_cpf, proj.Usuarios);
+
+            if(user == null){
+                System.out.println("Usuário não encontrado");
+            }
+        
             System.out.println("Qual atividade deseja associar?\n");
             for(Atividade i: proj.ativs){
                 System.out.printf("%d- %s\n", i.id, i.descricao);
@@ -697,6 +807,102 @@ public class Sistema {
         }
     }
 
+    public static void intercambio(ArrayList<Projeto> projetos){
+        System.out.println("Qual projeto o usuário pertence?\n");
+
+        for(Projeto p: projetos){
+            System.out.printf("%d- %s\n", p.id, p.descricao);
+        }
+        int p = input.nextInt();
+        Projeto proj = projetos.get(p);
+
+        System.out.print("Digite o cpf do Usuario que seja adicionar: ");
+        String cpf = input.next();
+        Usuario user = buscaPorCpf(cpf, proj.Usuarios);
+
+        if(user == null){
+            System.out.println("Usuário não encontrado");
+        }
+        else{
+            System.out.println("Qual projeto a atividade pertence?\n");
+
+            for(Projeto p2: projetos){
+                System.out.printf("%d- %s\n", p2.id, p2.descricao);
+            }
+            int p2 = input.nextInt();
+            Projeto proj2 = projetos.get(p2);
+
+            System.out.println("Qual atividade deseja adicionar o usuário?\n");
+
+            for(Atividade i: proj2.ativs){
+                System.out.printf("%d- %s\n", i.id, i.descricao);
+            }
+    
+            int ativ_res = input.nextInt();
+            Atividade ativ = proj2.ativs.get(ativ_res);
+
+            ativ.profissionais.add(user);
+
+            System.out.println("Adicione as tarefas do usuário");
+
+            addTarefas(ativ.profissionais);
+        }
+    }
+
+    public static void bolsas(ArrayList<Projeto> projetos){
+        System.out.println("Selecione um projeto\n");
+
+        for(Projeto p: projetos){
+            System.out.printf("%d- %s\n", p.id, p.descricao);
+        }
+        int p = input.nextInt();
+        Projeto proj = projetos.get(p);
+
+        System.out.printf("Qual tipo de usuário deseja pagar?:\n");
+        System.out.println("1- Alunos de Graduação\n2- Alunos de mestrado\n3- Alunos de doutorado");
+        System.out.println("4- Professores\n5- Pesquisadores\n6- Desenvolvedores\n7- Testadores\n8- Analistas\n9- Técnicos");
+        int res = input.nextInt();
+        String cargo = "";
+
+        switch (res) {
+            case 1:
+                cargo = "Aluno de Graduação";
+                break;
+            case 2:
+                cargo = "Aluno de mestrado";
+                break;
+            case 3:
+                cargo = "Aluno de doutorado";
+                break;
+            case 4:
+                cargo = "Professor";
+                break;
+            case 5:
+                cargo = "Pesquisador";
+                break;
+            case 6:
+                cargo = "Desenvolvedor";
+                break;
+            case 7:
+                cargo = "Testador";
+                break;
+            case 8:
+                cargo = "Analista";
+                break;
+            case 9:
+                cargo = "Técnico";
+                break;
+            default:
+                break;
+        }
+
+        for(Usuario i: proj.Usuarios){
+            if(i.cargo.equals(cargo)){
+                i.recebido += proj.bolsas[res-1];
+            }
+        }
+    }
+
     public static void editarProjeto(ArrayList<Projeto> projetos){
         System.out.println("Qual projeto deseja editar?\n");
 
@@ -710,17 +916,17 @@ public class Sistema {
         String j = input.next();
         switch (j) {
             case "1":
-                System.out.println("Mudar descrição:");
+                System.out.print("Mudar descrição: ");
                 String res1 = input.next();
                 proj.setDescricao(res1);
                 break;
             case "2":
-                System.out.println("Mudar Data inicio:");
+                System.out.print("Mudar Data inicio: ");
                 String res2 = input.next();
                 proj.setDataInicio(res2);
                 break;
             case "3":
-                System.out.println("Mudar Data final:");
+                System.out.print("Mudar Data final: ");
                 String res3 = input.next();
                 proj.setDataFinal(res3);
                 break;
@@ -751,17 +957,17 @@ public class Sistema {
         String j = input.next();
         switch (j) {
             case "1":
-                System.out.println("Mudar descrição:");
+                System.out.print("Mudar descrição: ");
                 String res1 = input.next();
                 ativ.setDescricao(res1);
                 break;
             case "2":
-                System.out.println("Mudar Data inicio:");
+                System.out.print("Mudar Data inicio: ");
                 String res2 = input.next();
                 ativ.setDataInicio(res2);
                 break;
             case "3":
-                System.out.println("Mudar Data final:");
+                System.out.print("Mudar Data final: ");
                 String res3 = input.next();
                 ativ.setDataFinal(res3);
                 break;
@@ -792,17 +998,17 @@ public class Sistema {
         String j = input.next();
         switch (j) {
             case "1":
-                System.out.println("Mudar descrição:");
+                System.out.print("Mudar descrição: ");
                 String res1 = input.next();
                 ativ.setDescricao(res1);
                 break;
             case "2":
-                System.out.println("Mudar Data inicio:");
+                System.out.print("Mudar Data inicio: ");
                 String res2 = input.next();
                 ativ.setDataInicio(res2);
                 break;
             case "3":
-                System.out.println("Mudar Data final:");
+                System.out.print("Mudar Data final: ");
                 String res3 = input.next();
                 ativ.setDataFinal(res3);
                 break;
@@ -826,17 +1032,17 @@ public class Sistema {
 
         switch (i) {
             case "1":
-                System.out.println("Mudar Nome:");
+                System.out.print("Mudar Nome: ");
                 String res1 = input.next();
                 user.setNome(res1);
                 break;
             case "2":
-                System.out.println("Mudar Nome:");
+                System.out.print("Mudar Nome: ");
                 String res2 = input.next();
                 user.setCargo(res2);
                 break;
             case "3":
-                System.out.println("Mudar CPF:");
+                System.out.print("Mudar CPF: ");
                 String res3 = input.next();
                 user.setCpf(res3);
                 break;
@@ -866,6 +1072,8 @@ public class Sistema {
                 System.out.printf("    Nome : %s\n", user.nome);
                 System.out.printf("    CPF : %s\n", user.cpf);
                 System.out.printf("    Cargo : %s\n", user.cargo);
+                System.out.printf("    Recebidos : %d\n", user.recebido);
+                System.out.println("___________________________");
             }
             
             System.out.println("  Atividades do projeto:");
@@ -885,6 +1093,7 @@ public class Sistema {
                     System.out.printf("    Descrição: %s\n", tf.descricao);
                     System.out.printf("    Responsável %s\n", tf.profissonal);
                 }
+                System.out.println("___________________________");
             }
             System.out.println("###########################################");
         }

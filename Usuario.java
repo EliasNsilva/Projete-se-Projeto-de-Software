@@ -3,14 +3,13 @@ public class Usuario {
     public String senha;
     public String nome;
     public String cargo;
-    public String bolsa;
+    public int recebido;
     
-    public Usuario(String cpf, String senha, String nome, String cargo, String bolsa) {
+    public Usuario(String cpf, String senha, String nome, String cargo) {
         this.cpf = cpf;
         this.senha = senha;
         this.cargo = cargo;
         this.nome = nome;
-        this.bolsa = bolsa;
     }
 
     public String getCpf(){
