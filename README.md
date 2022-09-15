@@ -1,5 +1,6 @@
 # Projete-se
 Projeto desenvolvido na disciplina projeto de software.
+
 O Projete-se é um sistema de gerenciamento de projetos, permitindo a criação e gerencia de dos mesmos.
 
 Funcionalidades implementadas:
