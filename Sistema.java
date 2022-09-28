@@ -6,13 +6,16 @@ Conceitos a serem aplicados:
     Classes - OK
     Overloading
     Overriding
+        toString dos tipos users
     Modificadores de acesso
     Herança
+        Usuário --> outro tipo de usuário
     Polimorfismo
+        Login talvez?
     Abstract class
     Interface
     Generics - Talvez ok
-    Collections
+    Collections - talvez ok
 */ 
 
 // 10) Permitir operações de undo e redo de informações referentes aos projetos,
