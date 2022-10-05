@@ -1,8 +1,9 @@
+
 public class Usuario {
-    public String cpf;
-    public String senha;
-    public String nome;
-    public String cargo;
+    private String cpf;
+    private String senha;
+    private String nome;
+    private String cargo;
     public int recebido;
     
     public Usuario(String cpf, String senha, String nome, String cargo) {
@@ -21,6 +22,9 @@ public class Usuario {
     public String getCargo(){
         return cargo;
     }
+    public String getSenha(){
+        return senha;
+    }
 
     public void atualizarSenha(String senha){
         this.senha = senha;
@@ -34,5 +38,12 @@ public class Usuario {
     }
     public void setCpf(String cpf){
         this.cpf = cpf;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "    Nome: "+ this.nome + "\n    CPF: " + this.cpf + "\n    Cargo: " + 
+        this.cargo + "\n    Recebidos" + this.recebido;
     }
 }

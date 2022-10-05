@@ -4,25 +4,26 @@ import java.util.ArrayList;
 /*
 Conceitos a serem aplicados:
     Classes - OK
-    Overloading
-    Overriding
+    Overloading - OK
+    Overriding - OK
         toString dos tipos users
-    Modificadores de acesso
-    Herança
+    Modificadores de acesso OK
+    Herança - OK
         Usuário --> outro tipo de usuário
-    Polimorfismo
+    Polimorfismo - OK
         Login talvez?
     Abstract class
     Interface
-    Generics - Talvez ok
-    Collections - talvez ok
+    Generics - OK
+    Collections - OK
 */ 
+
 
 // 10) Permitir operações de undo e redo de informações referentes aos projetos,
 // atividades e usuários.
 
 public class Sistema {
-    static Scanner input = new Scanner(System.in).useDelimiter("\n");;
+    static Scanner input = new Scanner(System.in).useDelimiter("\n");
     static Usuario user;
     
     public static void main(String[] args) {
@@ -54,7 +55,7 @@ public class Sistema {
                                 System.out.println("Por favor, faça login para continuar");
                                 break;
                             }
-                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                            if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                                 System.out.println("Sem permissão!");
                                 break;
                             }
@@ -65,7 +66,7 @@ public class Sistema {
                                 System.out.println("Por favor, faça login para continuar");
                                 break;
                             }
-                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                            if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                                 System.out.println("Sem permissão!");
                                 break;
                             }
@@ -105,7 +106,7 @@ public class Sistema {
                                 System.out.println("Por favor, faça login para continuar");
                                 break;
                             }
-                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                            if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                                 System.out.println("Sem permissão!");
                                 break;
                             }
@@ -116,7 +117,7 @@ public class Sistema {
                                 System.out.println("Por favor, faça login para continuar");
                                 break;
                             }
-                            if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                            if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                                 System.out.println("Sem permissão!");
                                 break;
                             }
@@ -139,7 +140,7 @@ public class Sistema {
                         System.out.println("Por favor, faça login para continuar");
                         break;
                     }
-                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                    if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                         System.out.println("Sem permissão!");
                         break;
                     }
@@ -168,38 +169,13 @@ public class Sistema {
                     int p = input.nextInt();            
                     Projeto proj = projetos.get(p);
 
-                    if(proj.coordenador.cpf != user.cpf && proj.coordenador.cargo != "Professor"){
+                    if(proj.getCoordenador().getCpf() != user.getCpf() && proj.getCoordenador().getCargo() != "Professor"){
                         System.out.println("Sem permissão!");
                         break;
                     }
 
-                    if(proj.status.equals("Em processo de criação")){
-                        System.out.println("Deseja inicar o projeto?\n\n1- Sim\n2- Não");
-                        int res = input.nextInt();
-                        if(res == 1){
-                            if(proj.descricao != null && proj.data_inicio != null && proj.coordenador != null){
-                                proj.status = "Iniciado";
-                            }
-                        }
-                    }
-                    else if(proj.status.equals("Iniciado")){
-                        System.out.println("Deseja dar andamento ao projeto?\n\n1- Sim\n2- Não");
-                        int res = input.nextInt();
-                        if(res == 1){
-                            if(proj.Usuarios != null ){
-                                proj.status = "Em andamento";
-                            }
-                        }
-                    }
-                    else if(proj.status.equals("Em andamento")){
-                        System.out.println("Deseja concluir o projeto?\n\n1- Sim\n2- Não");
-                        int res = input.nextInt();
-                        if(res == 1){
-                            if(proj.ativs != null && proj.data_final != null){
-                                proj.status = "Concluído";
-                            }
-                        }
-                    }
+                    proj.setStatus(proj, user);
+                    
                     System.out.println("\n#########################\n");
                     break;
                 case "5":
@@ -232,7 +208,7 @@ public class Sistema {
                         System.out.println("Por favor, faça login para continuar");
                         break;
                     }
-                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                    if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                         System.out.println("Sem permissão!");
                         break;
                     }
@@ -245,7 +221,7 @@ public class Sistema {
                         System.out.println("Por favor, faça login para continuar");
                         break;
                     }
-                    if(user.cargo != "Pesquisador" && user.cargo != "Professor"){
+                    if(user.getCargo() != "Pesquisador" && user.getCargo() != "Professor"){
                         System.out.println("Sem permissão!");
                         break;
                     }
@@ -279,21 +255,20 @@ public class Sistema {
         System.out.print("Insira a data de termino do projeto: ");
         String data_final = input.next();
         
-        System.out.print("Insira o cpf do coordenador do projeto: ");
-        String coordenador_cpf = input.next();
-        Usuario coordenador= buscaPorCpf(coordenador_cpf, Usuarios);
+        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final);
         
-        ArrayList<Usuario> part_proj = addUsuario(Usuarios);
+        Usuario coordenador = pj.setCoordenador(Usuarios);
+        
+        ArrayList<Usuario> part_proj = pj.setUsuarios(Usuarios);
         part_proj.add(coordenador);
         
         ArrayList<Atividade> ativ_proj = addAtividades(part_proj);
-
-        int[] bolsas = definirBolsa();
-
-        System.out.print("Qual a vigencia das bolsas? ");
-        String vigencia = input.next();
+        pj.ativs = ativ_proj;
         
-        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final, coordenador, part_proj, ativ_proj, bolsas, vigencia);
+        System.out.print("Qual a vigencia das bolsas? ");
+        pj.vigencia_bolsa = input.next(); 
+
+        pj.setBolsa();
         
         projetos.add(pj);
     }
@@ -345,55 +320,19 @@ public class Sistema {
                 break;
         }
 
-        Usuario part = new Usuario(cpf, senha, nome, cargo);
-        Usuarios.add(part);
-
-        return part;
-    }
-
-    public static int[] definirBolsa(){
-
-        int[] bolsas= new int[9];
-
-        System.out.println("Defina o valor das bolsas de cada profissional");
-        
-        System.out.print("Aluno de Graduação: ");
-        int valor = input.nextInt();
-        bolsas[0] = valor;
-
-        System.out.print("Aluno de mestrado: ");
-        valor = input.nextInt();
-        bolsas[1] = valor;
-
-        System.out.print("Aluno de doutorado: ");
-        valor = input.nextInt();
-        bolsas[2] = valor;
-
-        System.out.print("Professor: ");
-        valor = input.nextInt();
-        bolsas[3] = valor;
-
-        System.out.print("Pesquisador: ");
-        valor = input.nextInt();
-        bolsas[4] = valor;
-
-        System.out.print("Desenvolvedor: ");
-        valor = input.nextInt();
-        bolsas[5] = valor;
-
-        System.out.print("Testador: ");
-        valor = input.nextInt();
-        bolsas[6] = valor;
-
-        System.out.print("Analista: ");
-        valor = input.nextInt();
-        bolsas[7] = valor;
-
-        System.out.print("Técnico: ");
-        valor = input.nextInt();
-        bolsas[8] = valor;
-
-        return bolsas;
+        if (cargo.equals("Aluno de Graduação") || cargo.equals("Aluno de mestrado") || cargo.equals("Aluno de doutorado")){
+            System.out.print("Digite a matricula: ");
+            String matricula = input.next( );
+            // Polimorfismo
+            Usuario part = new Aluno(cpf, senha, nome, cargo, matricula);
+            Usuarios.add(part);
+            return part;
+        }
+        else{
+            Usuario part = new Usuario(cpf, senha, nome, cargo);           
+            Usuarios.add(part);
+            return part;
+        }
     }
 
     public static Atividade criarAtividades(ArrayList<Atividade> atividades, ArrayList<Usuario> Usuarios) {
@@ -409,30 +348,15 @@ public class Sistema {
         System.out.print("Insira o cpf do responsavel pela atividade: ");
         String resp_cpf = input.next();
         Usuario resp = buscaPorCpf(resp_cpf, Usuarios);
+        
+        ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
+        
+        Atividade ativ = new Atividade(atividades.size(), "Em andamento", desc, dt_inicio, dt_final, resp, tarefas);
 
-        ArrayList<Usuario> profs = addUsuario(Usuarios);
+        ArrayList<Usuario> profs = ativ.setProfissionais(Usuarios);
         profs.add(resp);
 
-        ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
-
-        Atividade ativ = new Atividade(atividades.size(), "Em andamento", desc, dt_inicio, dt_final, resp, tarefas, profs);
-
         return ativ;
-    }
-
-    
-    public static ArrayList<Usuario> addUsuario(ArrayList<Usuario> Usuarios){
-        ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
-        System.out.print("Digite o quantos Usuarios seram inseridos: ");
-        int n = input.nextInt();
-        for(int i = 0; i < n; i++){
-            System.out.print("Digite o cpf do Usuario: ");
-            String part_cpf = input.next();
-            Usuario part = buscaPorCpf(part_cpf, Usuarios);
-
-            part_proj.add(part);
-        }
-        return part_proj;
     }
 
     public static ArrayList<Atividade> addAtividades(ArrayList<Usuario> Usuarios){
@@ -553,12 +477,12 @@ public class Sistema {
                 campo = res1;
 
                 for(Projeto proj: projetos){
-                    if(proj.status.equals(campo)){
+                    if(proj.getStatus().equals(campo)){
                         System.out.printf("Descrição : %s\n", proj.descricao);
-                        System.out.printf("Status : %s\n", proj.status);
+                        System.out.printf("Status : %s\n", proj.getStatus());
                         System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
                         System.out.printf("Data de termino : %s\n", proj.data_final);
-                        System.out.printf("Coordenador do projeto %s", proj.coordenador.nome);
+                        System.out.printf("Coordenador do projeto %s", proj.getCoordenador().getNome());
                     }
                 }
                 break;
@@ -567,12 +491,12 @@ public class Sistema {
                 String res2 = input.next();
 
                 for(Projeto proj: projetos){
-                    if(proj.coordenador.getCpf().equals(res2)){
+                    if(proj.getCoordenador().getCpf().equals(res2)){
                         System.out.printf("Descrição : %s\n", proj.descricao);
-                        System.out.printf("Status : %s\n", proj.status);
+                        System.out.printf("Status : %s\n", proj.getStatus());
                         System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
                         System.out.printf("Data de termino : %s\n", proj.data_final);
-                        System.out.printf("Coordenador do projeto %s", proj.coordenador.nome);
+                        System.out.printf("Coordenador do projeto %s", proj.getCoordenador().getNome());
                     }
                 }
                 break;
@@ -609,7 +533,7 @@ public class Sistema {
                         System.out.printf("Descrição: %s", ativ.descricao);
                         System.out.printf("Data de Inicio : %s\n", ativ.data_inicio);
                         System.out.printf("Data de termino : %s\n", ativ.data_final);
-                        System.out.printf("Responsável %s\n", ativ.responsavel.nome);
+                        System.out.printf("Responsável %s\n", ativ.responsavel.getNome());
                     }
                 }
                 break;
@@ -623,7 +547,7 @@ public class Sistema {
                         System.out.printf("Descrição: %s", ativ.descricao);
                         System.out.printf("Data de Inicio : %s\n", ativ.data_inicio);
                         System.out.printf("Data de termino : %s\n", ativ.data_final);
-                        System.out.printf("Responsável %s\n", ativ.responsavel.nome);
+                        System.out.printf("Responsável %s\n", ativ.responsavel.getNome());
                     }
                 }
                 break;
@@ -646,10 +570,10 @@ public class Sistema {
                 campo = res1;
 
                 for(Usuario user: usuarios){
-                    if(user.nome.equals(campo)){
-                        System.out.printf("Nome : %s\n", user.nome);
-                        System.out.printf("CPF : %s\n", user.cpf);
-                        System.out.printf("Cargo : %s\n", user.cargo);
+                    if(user.getNome().equals(campo)){
+                        System.out.printf("Nome : %s\n", user.getNome());
+                        System.out.printf("CPF : %s\n", user.getCpf());
+                        System.out.printf("Cargo : %s\n", user.getCargo());
                     }
                 }
                 break;
@@ -660,10 +584,10 @@ public class Sistema {
                 campo = res2;
 
                 for(Usuario user: usuarios){
-                    if(user.cargo.equals(campo)){
-                        System.out.printf("Nome : %s\n", user.nome);
-                        System.out.printf("CPF : %s\n", user.cpf);
-                        System.out.printf("Cargo : %s\n", user.cargo);
+                    if(user.getCargo().equals(campo)){
+                        System.out.printf("Nome : %s\n", user.getNome());
+                        System.out.printf("CPF : %s\n", user.getCpf());
+                        System.out.printf("Cargo : %s\n", user.getCargo());
                     }
                 }
                 break;
@@ -673,10 +597,10 @@ public class Sistema {
                 campo = res3;
 
                 for(Usuario user: usuarios){
-                    if(user.cpf.equals(campo)){
-                        System.out.printf("Nome : %s\n", user.nome);
-                        System.out.printf("CPF : %s\n", user.cpf);
-                        System.out.printf("Cargo : %s\n", user.cargo);
+                    if(user.getCpf().equals(campo)){
+                        System.out.printf("Nome : %s\n", user.getNome());
+                        System.out.printf("CPF : %s\n", user.getCpf());
+                        System.out.printf("Cargo : %s\n", user.getCargo());
                     }
                 }
                 break;
@@ -691,9 +615,9 @@ public class Sistema {
             System.out.println("Usuário não encontrado");
         }
         else{
-            System.out.printf("Nome : %s\n", user.nome);
-            System.out.printf("CPF : %s\n", user.cpf);
-            System.out.printf("Cargo : %s\n", user.cargo);
+            System.out.printf("Nome : %s\n", user.getNome());
+            System.out.printf("CPF : %s\n", user.getCpf());
+            System.out.printf("Cargo : %s\n", user.getCargo());
         }
     }
 
@@ -718,7 +642,7 @@ public class Sistema {
             int res = input.nextInt();
             Projeto proj = projetos.get(res);
 
-            proj.Usuarios.add(user);
+            proj.setUsuarios(user);
 
         }else if(escolha == 2){
             System.out.println("Qual projeto deseja associar?\n");
@@ -730,11 +654,15 @@ public class Sistema {
             int res = input.nextInt();
             Projeto proj = projetos.get(res);
 
-            ArrayList<Usuario> lista_usua = addUsuario(usuarios);
+            System.out.print("Digite o cpf do Usuario: ");
+            String part_cpf = input.next();
+            Usuario user = buscaPorCpf(part_cpf, usuarios);
 
-            for(Usuario user: lista_usua){
-                proj.Usuarios.add(user);
+            if(user == null){
+                System.out.println("Usuário não encontrado");
             }
+
+            proj.setUsuarios(user);
         }
     }
 
@@ -753,7 +681,7 @@ public class Sistema {
 
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();
-            Usuario user = buscaPorCpf(part_cpf, proj.Usuarios);
+            Usuario user = buscaPorCpf(part_cpf, proj.getUsuarios());
 
             if(user == null){
                 System.out.println("Usuário não encontrado");
@@ -767,7 +695,7 @@ public class Sistema {
             int at = input.nextInt();
 
             Atividade ativ = proj.ativs.get(at);
-            ativ.profissionais.add(user);
+            ativ.getProfissionais().add(user);
 
         }else if(escolha == 2){
             System.out.println("Qual projeto a atividade pertence?\n");
@@ -794,7 +722,7 @@ public class Sistema {
             }
             else{
                 Atividade ativ = proj.ativs.get(ativ_res);
-                ativ.profissionais.add(user);
+                ativ.getProfissionais().add(user);
             }
         }
     }
@@ -810,7 +738,7 @@ public class Sistema {
 
         System.out.print("Digite o cpf do Usuario que seja adicionar: ");
         String cpf = input.next();
-        Usuario user = buscaPorCpf(cpf, proj.Usuarios);
+        Usuario user = buscaPorCpf(cpf, proj.getUsuarios());
 
         if(user == null){
             System.out.println("Usuário não encontrado");
@@ -833,11 +761,11 @@ public class Sistema {
             int ativ_res = input.nextInt();
             Atividade ativ = proj2.ativs.get(ativ_res);
 
-            ativ.profissionais.add(user);
+            ativ.getProfissionais().add(user);
 
             System.out.println("Adicione as tarefas do usuário");
 
-            addTarefas(ativ.profissionais);
+            addTarefas(ativ.getProfissionais());
         }
     }
 
@@ -888,8 +816,8 @@ public class Sistema {
                 break;
         }
 
-        for(Usuario i: proj.Usuarios){
-            if(i.cargo.equals(cargo)){
+        for(Usuario i: proj.getUsuarios()){
+            if(i.getCargo().equals(cargo)){
                 i.recebido += proj.bolsas[res-1];
             }
         }
@@ -1051,20 +979,17 @@ public class Sistema {
         for(Projeto proj: projetos){
             System.out.printf("Projeto %d\n", proj.id);
             System.out.printf("Descrição : %s\n", proj.descricao);
-            System.out.printf("Status : %s\n",proj.status);
+            System.out.printf("Status : %s\n",proj.getStatus());
             System.out.printf("Data de Inicio : %s\n", proj.data_inicio);
             System.out.printf("Data de termino : %s\n", proj.data_final);
-            System.out.printf("Coordenador do projeto %s\n", proj.coordenador.nome);
+            System.out.printf("Coordenador do projeto %s\n", proj.getCoordenador().getNome());
 
             System.out.println("  Participantes do projeto:");
-            for(Usuario user: proj.Usuarios){
-                if(proj.Usuarios == null){
+            for(Usuario user: proj.getUsuarios()){
+                if(proj.getUsuarios() == null){
                     break;
                 }
-                System.out.printf("    Nome : %s\n", user.nome);
-                System.out.printf("    CPF : %s\n", user.cpf);
-                System.out.printf("    Cargo : %s\n", user.cargo);
-                System.out.printf("    Recebidos : %d\n", user.recebido);
+                System.out.printf(user.toString());
                 System.out.println("___________________________");
             }
             
@@ -1078,7 +1003,7 @@ public class Sistema {
                 System.out.printf("    Descrição: %s\n", ativ.descricao);
                 System.out.printf("    Data de Inicio : %s\n", ativ.data_inicio);
                 System.out.printf("    Data de termino : %s\n", ativ.data_final);
-                System.out.printf("    Responsável %s\n", ativ.responsavel.nome);
+                System.out.printf("    Responsável %s\n", ativ.responsavel.getNome());
 
                 for(Tarefas tf: ativ.tarefas){
                     System.out.printf("    Tarefa %d\n", tf.id);
@@ -1134,7 +1059,7 @@ public class Sistema {
                 System.out.print("Digite o senha: ");
                 String loginSenha = input.next();
     
-                if(loginSenha.equals(user.senha)){
+                if(loginSenha.equals(user.getSenha())){
                     return user;
                 }
                 else{

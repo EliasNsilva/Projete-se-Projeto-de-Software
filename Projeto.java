@@ -1,28 +1,37 @@
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Projeto {
     public int id;
-    public String status;
+    private String status;
     public String descricao;
     public String data_inicio;
     public String data_final;
-    public Usuario coordenador;
-    public ArrayList<Usuario> Usuarios;
+    private Usuario coordenador;
+    private ArrayList<Usuario> Usuarios;
     public ArrayList<Atividade> ativs;
     public int[] bolsas;
     public String vigencia_bolsa;
     
-    public Projeto(int id, String status, String descricao, String data_inicio, String data_final, Usuario coordenador,ArrayList<Usuario> Usuarios, ArrayList<Atividade> ativs, int[] bolsas,String vigencia_bolsa) {
+    public Projeto(int id, String status, String descricao, String data_inicio, String data_final) {
         this.id = id;
         this.status = status;
         this.descricao = descricao;
         this.data_inicio = data_inicio;
         this.data_final = data_final;
-        this.coordenador = coordenador;
-        this.Usuarios = Usuarios;
-        this.ativs = ativs;
-        this.bolsas = bolsas;
-        this.vigencia_bolsa = vigencia_bolsa;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public Usuario getCoordenador(){
+        return coordenador;
+    }
+
+    public ArrayList<Usuario> getUsuarios(){
+        return Usuarios;
     }
 
     public void setDescricao(String descricao){
@@ -33,5 +42,132 @@ public class Projeto {
     }
     public void setDataInicio(String data_inicio){
         this.data_inicio = data_inicio;
+    }
+
+    public Usuario setCoordenador(ArrayList<Usuario> Usuarios){
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Insira o cpf do coordenador do projeto: ");
+        String coordenador_cpf = input.next();
+
+        Usuario user = Sistema.buscaPorCpf(coordenador_cpf, Usuarios);
+
+        if(user == null){
+            System.out.println("Usuário não existente, tente novamente!");
+            setCoordenador(Usuarios);
+        }
+        else{
+            this.coordenador = user;
+            return user;
+        }
+        return null;
+    }
+
+    // OVERLOAD
+    public ArrayList<Usuario> setUsuarios(ArrayList<Usuario> Usuarios){
+        ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+
+        System.out.print("Digite quantos Usuarios seram inseridos: ");
+
+        int n = input.nextInt();
+        for(int i = 0; i < n; i++){
+            System.out.print("Digite o cpf do Usuario: ");
+            String part_cpf = input.next();
+            Usuario part = Sistema.buscaPorCpf(part_cpf, Usuarios);
+            if (part == null){
+                System.out.println("Usuário não existente, tente novamente!");
+                i -= 1;
+            }
+            else{
+                part_proj.add(part);
+            }
+
+        }
+        this.Usuarios = part_proj;
+
+        return part_proj;
+    }
+
+    // OVERLOAD
+    public void setUsuarios(Usuario user){
+        this.Usuarios.add(user);
+    }
+
+    public void setStatus(Projeto proj, Usuario user){
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+
+        if(proj.status.equals("Em processo de criação")){
+            System.out.println("Deseja inicar o projeto?\n\n1- Sim\n2- Não");
+            int res = input.nextInt();
+            if(res == 1){
+                if(proj.descricao != null && proj.data_inicio != null && proj.coordenador != null){
+                    proj.status = "Iniciado";
+                }
+            }
+        }
+        else if(proj.status.equals("Iniciado")){
+            System.out.println("Deseja dar andamento ao projeto?\n\n1- Sim\n2- Não");
+            int res = input.nextInt();
+            if(res == 1){
+                if(proj.Usuarios != null ){
+                    proj.status = "Em andamento";
+                }
+            }
+        }
+        else if(proj.status.equals("Em andamento")){
+            System.out.println("Deseja concluir o projeto?\n\n1- Sim\n2- Não");
+            int res = input.nextInt();
+            if(res == 1){
+                if(proj.ativs != null && proj.data_final != null){
+                    proj.status = "Concluído";
+                }
+            }
+        }
+    }
+
+    public void setBolsa(){
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+        int[] bolsas= new int[9];
+
+        System.out.println("Defina o valor das bolsas de cada profissional");
+        
+        System.out.print("Aluno de Graduação: ");
+        int valor = input.nextInt();
+        bolsas[0] = valor;
+
+        System.out.print("Aluno de mestrado: ");
+        valor = input.nextInt();
+        bolsas[1] = valor;
+
+        System.out.print("Aluno de doutorado: ");
+        valor = input.nextInt();
+        bolsas[2] = valor;
+
+        System.out.print("Professor: ");
+        valor = input.nextInt();
+        bolsas[3] = valor;
+
+        System.out.print("Pesquisador: ");
+        valor = input.nextInt();
+        bolsas[4] = valor;
+
+        System.out.print("Desenvolvedor: ");
+        valor = input.nextInt();
+        bolsas[5] = valor;
+
+        System.out.print("Testador: ");
+        valor = input.nextInt();
+        bolsas[6] = valor;
+
+        System.out.print("Analista: ");
+        valor = input.nextInt();
+        bolsas[7] = valor;
+
+        System.out.print("Técnico: ");
+        valor = input.nextInt();
+        bolsas[8] = valor;
+
+        this.bolsas = bolsas;
     }
 }
