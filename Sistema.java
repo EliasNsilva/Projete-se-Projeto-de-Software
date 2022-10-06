@@ -18,6 +18,9 @@ Conceitos a serem aplicados:
     Collections - OK
 */ 
 
+// TODO 
+//     Ideia nova do ID gerou problema na escolha do projeto 
+//     por causa do index;
 
 // 10) Permitir operações de undo e redo de informações referentes aos projetos,
 // atividades e usuários.
@@ -255,7 +258,9 @@ public class Sistema {
         System.out.print("Insira a data de termino do projeto: ");
         String data_final = input.next();
         
-        Projeto pj = new Projeto(projetos.size(), "Em processo de criação", descricao, data_inicio, data_final);
+        Projeto pj = new Projeto("Em processo de criação", descricao, data_inicio, data_final);
+
+        pj.setID(projetos);
         
         Usuario coordenador = pj.setCoordenador(Usuarios);
         
@@ -776,7 +781,14 @@ public class Sistema {
             System.out.printf("%d- %s\n", p.id, p.descricao);
         }
         int p = input.nextInt();
-        Projeto proj = projetos.get(p);
+        int j = 0;
+        for(Projeto i: projetos){
+            ++j;
+            if(i.getID() == p){
+                break;
+            }
+        }
+        Projeto proj = projetos.get(j);
 
         System.out.printf("Qual tipo de usuário deseja pagar?:\n");
         System.out.println("1- Alunos de Graduação\n2- Alunos de mestrado\n3- Alunos de doutorado");

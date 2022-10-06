@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Projeto {
+public class Projeto implements GeradorID{
     public int id;
     private String status;
     public String descricao;
@@ -14,8 +14,7 @@ public class Projeto {
     public int[] bolsas;
     public String vigencia_bolsa;
     
-    public Projeto(int id, String status, String descricao, String data_inicio, String data_final) {
-        this.id = id;
+    public Projeto(String status, String descricao, String data_inicio, String data_final) {
         this.status = status;
         this.descricao = descricao;
         this.data_inicio = data_inicio;
@@ -34,6 +33,21 @@ public class Projeto {
         return Usuarios;
     }
 
+    @Override
+    public int getID(){
+        return id;
+    }
+
+    @Override
+    public void setID(ArrayList<Projeto> projetos){
+        int max = 0;
+        for(Projeto i: projetos){
+            if(i.getID() > max){
+                max = i.getID();
+            }
+        }
+        this.id = max + 1;
+    }
     public void setDescricao(String descricao){
         this.descricao = descricao;
     }

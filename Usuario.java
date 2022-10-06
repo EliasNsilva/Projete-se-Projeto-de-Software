@@ -44,6 +44,6 @@ public class Usuario {
     public String toString() {
         // TODO Auto-generated method stub
         return "    Nome: "+ this.nome + "\n    CPF: " + this.cpf + "\n    Cargo: " + 
-        this.cargo + "\n    Recebidos" + this.recebido;
+        this.cargo + "\n    Recebidos" + this.recebido + "\n";
     }
 }
