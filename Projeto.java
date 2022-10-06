@@ -40,13 +40,12 @@ public class Projeto implements GeradorID{
 
     @Override
     public void setID(ArrayList<Projeto> projetos){
-        int max = 0;
+        int count = 0;
         for(Projeto i: projetos){
-            if(i.getID() > max){
-                max = i.getID();
-            }
+            i.id = count;
+            count++;
         }
-        this.id = max + 1;
+        this.id = count;
     }
     public void setDescricao(String descricao){
         this.descricao = descricao;

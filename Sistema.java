@@ -781,14 +781,7 @@ public class Sistema {
             System.out.printf("%d- %s\n", p.id, p.descricao);
         }
         int p = input.nextInt();
-        int j = 0;
-        for(Projeto i: projetos){
-            ++j;
-            if(i.getID() == p){
-                break;
-            }
-        }
-        Projeto proj = projetos.get(j);
+        Projeto proj = projetos.get(p);
 
         System.out.printf("Qual tipo de usuário deseja pagar?:\n");
         System.out.println("1- Alunos de Graduação\n2- Alunos de mestrado\n3- Alunos de doutorado");
