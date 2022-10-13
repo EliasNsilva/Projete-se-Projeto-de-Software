@@ -13,14 +13,16 @@ Conceitos a serem aplicados:
     Polimorfismo - OK
         Login talvez?
     Abstract class
-    Interface
+    Interface - OK
     Generics - OK
     Collections - OK
 */ 
 
 // TODO 
-//     Ideia nova do ID gerou problema na escolha do projeto 
-//     por causa do index;
+//     Melhorar edição de dados
+//     Restringir campos de usuário
+//     Implementar classe abstrata
+
 
 // 10) Permitir operações de undo e redo de informações referentes aos projetos,
 // atividades e usuários.
@@ -356,7 +358,9 @@ public class Sistema {
         
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
         
-        Atividade ativ = new Atividade(atividades.size(), "Em andamento", desc, dt_inicio, dt_final, resp, tarefas);
+        Atividade ativ = new Atividade("Em andamento", desc, dt_inicio, dt_final, resp, tarefas);
+
+        ativ.setID(atividades);
 
         ArrayList<Usuario> profs = ativ.setProfissionais(Usuarios);
         profs.add(resp);
@@ -957,17 +961,17 @@ public class Sistema {
 
         switch (i) {
             case "1":
-                System.out.print("Mudar Nome: ");
+                System.out.print("Mudar Nome para: ");
                 String res1 = input.next();
                 user.setNome(res1);
                 break;
             case "2":
-                System.out.print("Mudar Nome: ");
+                System.out.print("Mudar cargo para: ");
                 String res2 = input.next();
                 user.setCargo(res2);
                 break;
             case "3":
-                System.out.print("Mudar CPF: ");
+                System.out.print("Mudar CPF para: ");
                 String res3 = input.next();
                 user.setCpf(res3);
                 break;

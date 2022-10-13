@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Atividade {
+public class Atividade implements GeradorID <Atividade>{
     public int id;
     public String status;
     public String descricao;
@@ -11,8 +11,7 @@ public class Atividade {
     private ArrayList<Usuario> profissionais;
     public ArrayList<Tarefas> tarefas;
     
-    public Atividade(int id, String status, String descricao, String data_inicio, String data_final, Usuario responsavel, ArrayList<Tarefas> tarefas) {
-        this.id = id;
+    public Atividade(String status, String descricao, String data_inicio, String data_final, Usuario responsavel, ArrayList<Tarefas> tarefas) {
         this.status = status;
         this.descricao = descricao;
         this.data_inicio = data_inicio;
@@ -32,6 +31,21 @@ public class Atividade {
     }
     public ArrayList<Usuario> getProfissionais(){
         return profissionais;
+    }
+
+    @Override
+    public int getID(){
+        return id;
+    }
+
+    @Override
+    public void setID(ArrayList<Atividade> ativs){
+        int count = 0;
+        for(Atividade i: ativs){
+            i.id = count;
+            count++;
+        }
+        this.id = count;
     }
 
     public void setDescricao(String descricao){

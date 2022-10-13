@@ -1,5 +1,6 @@
+import java.util.ArrayList;
 
-public class Tarefas {
+public class Tarefas implements GeradorID <Tarefas>{
     public int id;
     public String descricao;
     public String profissonal;
@@ -7,6 +8,21 @@ public class Tarefas {
     public Tarefas(int id, String descricao, String profissional){
         this.id = id;
         this.descricao = descricao;
-        this.profissonal = descricao;
+        this.profissonal = profissional;
+    }
+
+    @Override
+    public int getID(){
+        return id;
+    }
+
+    @Override
+    public void setID(ArrayList<Tarefas> tarefas){
+        int count = 0;
+        for(Tarefas i: tarefas){
+            i.id = count;
+            count++;
+        }
+        this.id = count;
     }
 }

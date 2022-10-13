@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Projeto implements GeradorID{
+public class Projeto implements GeradorID<Projeto>{
     public int id;
     private String status;
     public String descricao;
