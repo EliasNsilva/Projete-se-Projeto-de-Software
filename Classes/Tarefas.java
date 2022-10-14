@@ -1,4 +1,7 @@
+package Classes;
 import java.util.ArrayList;
+
+import Funcionalidades.GeradorID;
 
 public class Tarefas implements GeradorID <Tarefas>{
     public int id;

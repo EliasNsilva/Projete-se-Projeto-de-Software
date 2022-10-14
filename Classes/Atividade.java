@@ -1,5 +1,9 @@
+package Classes;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Funcionalidades.GeradorID;
+import Funcionalidades.Utilidades;
 
 public class Atividade implements GeradorID <Atividade>{
     public int id;
@@ -67,7 +71,7 @@ public class Atividade implements GeradorID <Atividade>{
         for(int i = 0; i < n; i++){
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();
-            Usuario part = Sistema.buscaPorCpf(part_cpf, Usuarios);
+            Usuario part = Utilidades.buscaPorCpf(part_cpf, Usuarios);
             if (part == null){
                 System.out.println("Usuário não existente, tente novamente!");
                 i -= 1;

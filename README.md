@@ -18,3 +18,8 @@ Funcionalidades implementadas:
 Funcionalidade pendente:
 
 10) Permitir operações de undo e redo.
+
+## Como rodar o sistema:
+
+1. ```javac Sistema.java```
+2. ```java Sistema```

@@ -1,3 +1,4 @@
+package Classes;
 
 public class Aluno extends Usuario{
     private String matricula;

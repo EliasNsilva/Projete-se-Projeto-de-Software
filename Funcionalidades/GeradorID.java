@@ -1,3 +1,4 @@
+package Funcionalidades;
 import java.util.ArrayList;
 
 public interface GeradorID <T>{
