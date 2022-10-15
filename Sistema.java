@@ -9,23 +9,9 @@ import Funcionalidades.Utilidades;
 
 import java.util.ArrayList;
 
-/*
-Conceitos a serem aplicados:
-    Classes - OK
-    Overloading - OK
-    Overriding - OK
-    Modificadores de acesso OK
-    Herança - OK
-    Polimorfismo - OK
-    Abstract class - OK
-    Interface - OK
-    Generics - OK
-    Collections - OK
-*/ 
-
 // TODO 
+//     Corrigir busca de usuário
 //     Melhorar edição de dados
-//     Restringir campos de usuário
 //     utilizar mais o toString
 //     criar logout
 //     Testar
@@ -177,7 +163,7 @@ public class Sistema extends Utilidades{
                     System.out.println("\n#########################\n");
                     System.out.println("De qual projeto deseja alterar o status?");
                     for(Projeto k: projetos){
-                        System.out.printf("%d- %s\n", k.id, k.descricao);
+                        System.out.printf("%d- %s\n", k.id, k.getDescricao());
                     }
                     
                     int p = input.nextInt();            

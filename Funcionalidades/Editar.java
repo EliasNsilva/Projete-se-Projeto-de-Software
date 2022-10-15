@@ -13,7 +13,7 @@ public class Editar extends Utilidades{
         System.out.println("Qual projeto deseja editar?\n");
 
         for(Projeto p: projetos){
-            System.out.printf("%d- %s\n", p.id, p.descricao);
+            System.out.printf("%d- %s\n", p.id, p.getDescricao());
         }
         int p = input.nextInt();
         Projeto proj = projetos.get(p);
@@ -45,7 +45,7 @@ public class Editar extends Utilidades{
         System.out.println("Qual projeto a atividade pertence?\n");
 
         for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
         int res = input.nextInt();
@@ -86,7 +86,7 @@ public class Editar extends Utilidades{
         System.out.println("Qual projeto a atividade pertence?\n");
 
         for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
         int res = input.nextInt();

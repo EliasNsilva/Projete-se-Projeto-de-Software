@@ -13,7 +13,7 @@ public class Remover {
         System.out.println("Qual projeto deseja remover?\n");
 
         for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
         int res = input.nextInt();
@@ -27,7 +27,7 @@ public class Remover {
         System.out.println("Qual projeto a atividade pertence?\n");
 
         for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
         int res = input.nextInt();
@@ -50,7 +50,7 @@ public class Remover {
         System.out.println("Qual projeto a tarefa pertence?\n");
 
         for(Projeto i: projetos){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
         int res = input.nextInt();

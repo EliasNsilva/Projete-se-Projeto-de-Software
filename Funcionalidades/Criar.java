@@ -15,14 +15,16 @@ public class Criar extends Utilidades{
         System.out.print("Insira a descrição do projeto: ");
         String descricao = input.next( );
         
+        Projeto pj = new Projeto("Em processo de criação", descricao);
+
         System.out.print("Insira a data de início do projeto: ");
         String data_inicio = input.next();
+        pj.setDataInicio(data_inicio);
         
         System.out.print("Insira a data de termino do projeto: ");
         String data_final = input.next();
+        pj.setDataFinal(data_final);
         
-        Projeto pj = new Projeto("Em processo de criação", descricao, data_inicio, data_final);
-
         pj.setID(projetos);
         
         Usuario coordenador = pj.setCoordenador(Usuarios);
@@ -107,19 +109,21 @@ public class Criar extends Utilidades{
         System.out.print("Digite o descrição: ");
         String desc = input.next();
         
-        System.out.print("Insira a data de início da atividade: ");
-        String dt_inicio = input.next();
-
-        System.out.print("Insira a data de termino da atividade: ");
-        String dt_final = input.next();
-
+        
         System.out.print("Insira o cpf do responsavel pela atividade: ");
         String resp_cpf = input.next();
         Usuario resp = buscaPorCpf(resp_cpf, Usuarios);
         
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
+        Atividade ativ = new Atividade("Em andamento", desc, resp, tarefas);
         
-        Atividade ativ = new Atividade("Em andamento", desc, dt_inicio, dt_final, resp, tarefas);
+        System.out.print("Insira a data de início da atividade: ");
+        String dt_inicio = input.next();
+        ativ.setDataInicio(dt_inicio);
+
+        System.out.print("Insira a data de termino da atividade: ");
+        String dt_final = input.next();
+        ativ.setDataFinal(dt_final);
 
         ativ.setID(atividades);
 

@@ -1,4 +1,6 @@
 package Classes;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,17 +11,15 @@ public class Atividade implements GeradorID <Atividade>{
     public int id;
     public String status;
     public String descricao;
-    public String data_inicio;
-    public String data_final;
+    public LocalDate data_inicio;
+    public LocalDate data_final;
     public Usuario responsavel; 
     private ArrayList<Usuario> profissionais;
     public ArrayList<Tarefas> tarefas;
     
-    public Atividade(String status, String descricao, String data_inicio, String data_final, Usuario responsavel, ArrayList<Tarefas> tarefas) {
+    public Atividade(String status, String descricao, Usuario responsavel, ArrayList<Tarefas> tarefas) {
         this.status = status;
         this.descricao = descricao;
-        this.data_inicio = data_inicio;
-        this.data_final = data_final;
         this.responsavel = responsavel;
         this.tarefas = tarefas;
     }
@@ -27,10 +27,10 @@ public class Atividade implements GeradorID <Atividade>{
     public String getDescricao(){
         return descricao;
     }
-    public String getDataInicio(){
+    public LocalDate getDataInicio(){
         return data_inicio;
     }
-    public String getDataFinal(){
+    public LocalDate getDataFinal(){
         return data_final;
     }
     public ArrayList<Usuario> getProfissionais(){
@@ -55,11 +55,23 @@ public class Atividade implements GeradorID <Atividade>{
     public void setDescricao(String descricao){
         this.descricao = descricao;
     }
-    public void setDataFinal(String data_final){
-        this.data_final = data_final;
-    }
     public void setDataInicio(String data_inicio){
-        this.data_inicio = data_inicio;
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+            LocalDate data = LocalDate.parse(data_inicio, formato); 
+            this.data_inicio = data;
+        } catch (Exception e) {
+            System.out.println("Formato da data errada!");
+        }
+    }
+    public void setDataFinal(String data_final){
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+            LocalDate data = LocalDate.parse(data_final, formato); 
+            this.data_final = data;
+        } catch (Exception e) {
+            System.out.println("Formato da data errada!");
+        }
     }
     public ArrayList<Usuario> setProfissionais(ArrayList<Usuario> Usuarios){
         ArrayList<Usuario> profs = new ArrayList<Usuario>();
@@ -83,5 +95,12 @@ public class Atividade implements GeradorID <Atividade>{
         this.profissionais = profs;
 
         return profs;
-    } 
+    }
+
+    @Override
+    public String toString() {
+        return "Descrição: " + this.descricao + "\nData de Inicio: " + this.data_inicio +
+        "\nData Final: " + this.data_final + "\nStatus: " + this.status + 
+        "\nResponsável pela atividade: " + this.responsavel.getNome() + "\n";
+    }
 }

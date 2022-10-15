@@ -1,5 +1,7 @@
 package Classes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,20 +11,18 @@ import Funcionalidades.Utilidades;
 public class Projeto implements GeradorID<Projeto>{
     public int id;
     private String status;
-    public String descricao;
-    public String data_inicio;
-    public String data_final;
+    private String descricao;
+    private LocalDate data_inicio;
+    private LocalDate data_final;
     private Usuario coordenador;
     private ArrayList<Usuario> Usuarios;
     public ArrayList<Atividade> ativs;
     public int[] bolsas;
     public String vigencia_bolsa;
     
-    public Projeto(String status, String descricao, String data_inicio, String data_final) {
+    public Projeto(String status, String descricao) {
         this.status = status;
         this.descricao = descricao;
-        this.data_inicio = data_inicio;
-        this.data_final = data_final;
     }
 
     public String getStatus(){
@@ -35,6 +35,16 @@ public class Projeto implements GeradorID<Projeto>{
 
     public ArrayList<Usuario> getUsuarios(){
         return Usuarios;
+    }
+
+    public String getDescricao(){
+        return descricao;
+    }
+    public LocalDate getDataFinal(){
+        return data_final;
+    }
+    public LocalDate getDataInicio(){
+        return data_inicio;
     }
 
     @Override
@@ -54,11 +64,23 @@ public class Projeto implements GeradorID<Projeto>{
     public void setDescricao(String descricao){
         this.descricao = descricao;
     }
-    public void setDataFinal(String data_final){
-        this.data_final = data_final;
-    }
     public void setDataInicio(String data_inicio){
-        this.data_inicio = data_inicio;
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+            LocalDate data = LocalDate.parse(data_inicio, formato); 
+            this.data_inicio = data;
+        } catch (Exception e) {
+            System.out.println("Formato da data errada!");
+        }
+    }
+    public void setDataFinal(String data_final){
+        try {
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+            LocalDate data = LocalDate.parse(data_final, formato); 
+            this.data_final = data;
+        } catch (Exception e) {
+            System.out.println("Formato da data errada!");
+        }
     }
 
     public Usuario setCoordenador(ArrayList<Usuario> Usuarios){
@@ -186,5 +208,12 @@ public class Projeto implements GeradorID<Projeto>{
         bolsas[8] = valor;
 
         this.bolsas = bolsas;
+    }
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Descrição: " + this.descricao + "\nData de Inicio: " + this.data_inicio +
+        "\nData Final: " + this.data_final + "\nStatus: " + this.status + 
+        "\nCoordenador do projeto: " + this.coordenador.getNome() + "\n";
     }
 }
