@@ -10,10 +10,7 @@ import Funcionalidades.Utilidades;
 import java.util.ArrayList;
 
 // TODO 
-//     Corrigir busca de usuário
 //     Melhorar edição de dados
-//     utilizar mais o toString
-//     criar logout
 //     Testar
 
 
@@ -38,7 +35,7 @@ public class Sistema extends Utilidades{
             System.out.println("1- Criação e remoção de informações\n2- Edição de informações");
             System.out.println("3- Associação de usuários aos projetos e atividades\n4- Alteração de status");
             System.out.println("5- Consultas\n6- Relatório\n7- Intercambio de usuários\n8- Pagamento de bolsas");
-            System.out.println("9- Login\n10- Undo ou redo");
+            System.out.println("9- Login/Logout\n10- Undo ou redo");
             String i = input.next();
             switch (i) {
                 case "1":
