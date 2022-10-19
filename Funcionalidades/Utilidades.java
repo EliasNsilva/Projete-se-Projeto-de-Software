@@ -28,14 +28,20 @@ public abstract class Utilidades {
         
         switch (i) {
             case "1":
-                System.out.println("Opções: Em processo de criação, Iniciado, Em andamento, Concluído.");
-                String res1 = input.next();
-                campo = res1;
+                try {   
+                    System.out.println("Opções:\n1- Em processo de criação\n2- Iniciado\n3- Em andamento\n4- Concluído\n");
+                    int res1 = input.nextInt();
+                    String opcoes[] = {"Em processo de criação", "Iniciado", "Em andamento", "Concluído"};
+                    campo = opcoes[res1 -1];
 
-                for(Projeto proj: projetos){
-                    if(proj.getStatus().equals(campo)){
-                        System.out.println(proj);
+                    for(Projeto proj: projetos){
+                        if(proj.getStatus().equals(campo)){
+                            System.out.println(proj);
+                        }
                     }
+                } catch (Exception e){
+                    System.out.println("Digite somente o número referente a opção\n");
+                    consultaProj(projetos, usuarios);
                 }
                 break;
             case "2":
@@ -57,45 +63,51 @@ public abstract class Utilidades {
 
     public static void consultaAtiv(ArrayList<Projeto> projetos){
         String campo;
-        System.out.print("A qual projeto a atividade pertence?");
+        System.out.println("A qual projeto a atividade pertence?");
         
         for(Projeto i: projetos){
             System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
         
-        int i = input.nextInt();
-        Projeto proj = projetos.get(i);
+        try {     
+            int i = input.nextInt();
+            Projeto proj = projetos.get(i);
 
-        System.out.println("Qual por qual campo deseja buscar?\n");
-        System.out.println("1- Status\n2- Responsável");
-        String j = input.next();
+            System.out.println("Qual por qual campo deseja buscar?\n");
+            System.out.println("1- Status\n2- Responsável");
+            String j = input.next();
 
-        switch (j) {
-            case "1":
-                System.out.println("Opções: Em andamento, Concluído.");
-                String res1 = input.next();
-                campo = res1;
-
-                for(Atividade ativ: proj.ativs){
-                    if(ativ.status.equals(campo)){
-                        System.out.println(ativ);
-                        break;
+            switch (j) {
+                case "1":
+                    System.out.println("Opções: Em andamento, Concluído.");
+                    String res1 = input.next();
+                    campo = res1;
+    
+                    for(Atividade ativ: proj.ativs){
+                        if(ativ.status.equals(campo)){
+                            System.out.println(ativ);
+                            break;
+                        }
                     }
-                }
-                break;
-            case "2":
-                System.out.print("Insira o cpf do responsável:");
-                String res2 = input.next();
-
-                for(Atividade ativ: proj.ativs){
-                    if(ativ.responsavel.getCpf().equals(res2)){
-                        System.out.println(ativ);
+                    break;
+                case "2":
+                    System.out.print("Insira o cpf do responsável:");
+                    String res2 = input.next();
+    
+                    for(Atividade ativ: proj.ativs){
+                        if(ativ.responsavel.getCpf().equals(res2)){
+                            System.out.println(ativ);
+                        }
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e){
+            System.out.println("Digite somente o número referente a opção\n");
+            consultaAtiv(projetos);
         }
+
     }
 
     public static void consultaUsu(ArrayList<Usuario> usuarios){

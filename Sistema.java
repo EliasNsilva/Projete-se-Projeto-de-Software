@@ -9,13 +9,6 @@ import Funcionalidades.Utilidades;
 
 import java.util.ArrayList;
 
-// TODO 
-//     Melhorar edição de dados
-//     Testar
-
-
-// 10) Permitir operações de undo e redo de informações referentes aos projetos,
-// atividades e usuários.
 
 public class Sistema extends Utilidades{
     static Scanner input = new Scanner(System.in).useDelimiter("\n");
@@ -163,15 +156,19 @@ public class Sistema extends Utilidades{
                         System.out.printf("%d- %s\n", k.id, k.getDescricao());
                     }
                     
-                    int p = input.nextInt();            
-                    Projeto proj = projetos.get(p);
+                    try {
+                        int p = input.nextInt();            
+                        Projeto proj = projetos.get(p);
 
-                    if(proj.getCoordenador().getCpf() != user.getCpf() && proj.getCoordenador().getCargo() != "Professor"){
-                        System.out.println("Sem permissão!");
-                        break;
+                        if(proj.getCoordenador().getCpf() != user.getCpf() && proj.getCoordenador().getCargo() != "Professor"){
+                            System.out.println("Sem permissão!");
+                            break;
+                        }
+
+                        proj.setStatus(proj, user);
+                    } catch (Exception e){
+                        System.out.println("Digite somente o número referente a opção\n");
                     }
-
-                    proj.setStatus(proj, user);
                     
                     System.out.println("\n#########################\n");
                     break;
