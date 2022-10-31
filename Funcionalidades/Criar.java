@@ -136,7 +136,12 @@ public class Criar extends Utilidades{
     public static ArrayList<Atividade> addAtividades(ArrayList<Usuario> Usuarios){
         ArrayList<Atividade> ativ_proj = new ArrayList<Atividade>();
         System.out.print("Digite o quantas atividades seram inseridas: ");
-        int n = input.nextInt();
+        int n = 0;
+        try {
+            n = input.nextInt();
+        } catch (Exception e) {
+            System.out.println();
+        }
 
         for(int i = 0; i < n; i++){
             Atividade ativ = criarAtividades(ativ_proj, Usuarios);

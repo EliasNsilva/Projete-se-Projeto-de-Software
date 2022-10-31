@@ -143,6 +143,9 @@ public class Projeto implements GeradorID<Projeto>{
                 if(proj.descricao != null && proj.data_inicio != null && proj.coordenador != null){
                     proj.status = "Iniciado";
                 }
+                else{
+                    System.out.println("O projeto não possuí informações suficientes.");
+                }
             }
         }
         else if(proj.status.equals("Iniciado")){
@@ -160,6 +163,9 @@ public class Projeto implements GeradorID<Projeto>{
             if(res == 1){
                 if(proj.ativs != null && proj.data_final != null){
                     proj.status = "Concluído";
+                }
+                else{
+                    System.out.println("O projeto não possuí informações suficientes.");
                 }
             }
         }

@@ -15,8 +15,16 @@ public class Editar extends Utilidades{
         for(Projeto p: projetos){
             System.out.printf("%d- %s\n", p.id, p.getDescricao());
         }
-        int p = input.nextInt();
-        Projeto proj = projetos.get(p);
+
+        Projeto proj = null;
+
+        try {
+            int p = input.nextInt();
+            proj = projetos.get(p);
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
+            editarProjeto(projetos);
+        }
 
         System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
         String j = input.next();
@@ -48,16 +56,29 @@ public class Editar extends Utilidades{
             System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
-        int res = input.nextInt();
-        Projeto proj = projetos.get(res);
+        Projeto proj = null;
+
+        try {
+            int p = input.nextInt();
+            proj = projetos.get(p);
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
+            editarAtividade(projetos);
+        }
 
         System.out.println("Qual atividade deseja editar?\n");
         for(Atividade i: proj.ativs){
             System.out.printf("%d- %s\n", i.id, i.descricao);
         }
+        Atividade ativ = null;
 
-        int ativ_res = input.nextInt();
-        Atividade ativ = proj.ativs.get(ativ_res);
+        try {
+            int ativ_res = input.nextInt();
+            ativ = proj.ativs.get(ativ_res);
+            
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
+        }
 
         System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
         String j = input.next();
@@ -90,7 +111,8 @@ public class Editar extends Utilidades{
         
         if(user == null){
             System.out.println("Usuário não encontrado, tente novamente");
-        }else{
+        }
+        else{
             System.out.println("Qual campo deseja editar?\n1- Nome\n2- Cargo\n3- CPF");
         
             String i = input.next();

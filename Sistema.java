@@ -9,6 +9,9 @@ import Funcionalidades.Utilidades;
 
 import java.util.ArrayList;
 
+//TO DO 
+// input.nextInt(); colocar em try catch
+// login bugado
 
 public class Sistema extends Utilidades{
     static Scanner input = new Scanner(System.in).useDelimiter("\n");
