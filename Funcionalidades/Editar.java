@@ -23,7 +23,6 @@ public class Editar extends Utilidades{
             proj = projetos.get(p);
         } catch (Exception e) {
             System.out.println("Digite somente o número referente a opção\n");
-            editarProjeto(projetos);
         }
 
         System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
@@ -63,7 +62,6 @@ public class Editar extends Utilidades{
             proj = projetos.get(p);
         } catch (Exception e) {
             System.out.println("Digite somente o número referente a opção\n");
-            editarAtividade(projetos);
         }
 
         System.out.println("Qual atividade deseja editar?\n");

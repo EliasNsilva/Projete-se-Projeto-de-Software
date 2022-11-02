@@ -107,9 +107,15 @@ public class Projeto implements GeradorID<Projeto>{
         ArrayList<Usuario> part_proj = new ArrayList<Usuario>();
         Scanner input = new Scanner(System.in).useDelimiter("\n");
 
-        System.out.print("Digite quantos Usuarios seram inseridos: ");
+        System.out.print("\nDigite o número de Usuarios que seram inseridos: ");
 
-        int n = input.nextInt();
+        int n = 0;
+        try {
+            n = input.nextInt();
+        } catch (Exception e) {
+            System.out.println("Insira somente números");
+        }
+
         for(int i = 0; i < n; i++){
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();
@@ -175,44 +181,50 @@ public class Projeto implements GeradorID<Projeto>{
         Scanner input = new Scanner(System.in).useDelimiter("\n");
         int[] bolsas= new int[9];
 
-        System.out.println("Defina o valor das bolsas de cada profissional");
+        System.out.println("\nDefina o valor das bolsas de cada profissional");
+
+        try {
+            System.out.print("Aluno de Graduação: ");
+            int valor = input.nextInt();
+            bolsas[0] = valor;
+
+            System.out.print("Aluno de mestrado: ");
+            valor = input.nextInt();
+            bolsas[1] = valor;
+
+            System.out.print("Aluno de doutorado: ");
+            valor = input.nextInt();
+            bolsas[2] = valor;
+
+            System.out.print("Professor: ");
+            valor = input.nextInt();
+            bolsas[3] = valor;
+
+            System.out.print("Pesquisador: ");
+            valor = input.nextInt();
+            bolsas[4] = valor;
+
+            System.out.print("Desenvolvedor: ");
+            valor = input.nextInt();
+            bolsas[5] = valor;
+
+            System.out.print("Testador: ");
+            valor = input.nextInt();
+            bolsas[6] = valor;
+
+            System.out.print("Analista: ");
+            valor = input.nextInt();
+            bolsas[7] = valor;
+
+            System.out.print("Técnico: ");
+            valor = input.nextInt();
+            bolsas[8] = valor;
+
+        } catch (Exception e) {
+            System.out.println("Certifique-se de inserir somente valores númericos");
+            setBolsa();
+        }
         
-        System.out.print("Aluno de Graduação: ");
-        int valor = input.nextInt();
-        bolsas[0] = valor;
-
-        System.out.print("Aluno de mestrado: ");
-        valor = input.nextInt();
-        bolsas[1] = valor;
-
-        System.out.print("Aluno de doutorado: ");
-        valor = input.nextInt();
-        bolsas[2] = valor;
-
-        System.out.print("Professor: ");
-        valor = input.nextInt();
-        bolsas[3] = valor;
-
-        System.out.print("Pesquisador: ");
-        valor = input.nextInt();
-        bolsas[4] = valor;
-
-        System.out.print("Desenvolvedor: ");
-        valor = input.nextInt();
-        bolsas[5] = valor;
-
-        System.out.print("Testador: ");
-        valor = input.nextInt();
-        bolsas[6] = valor;
-
-        System.out.print("Analista: ");
-        valor = input.nextInt();
-        bolsas[7] = valor;
-
-        System.out.print("Técnico: ");
-        valor = input.nextInt();
-        bolsas[8] = valor;
-
         this.bolsas = bolsas;
     }
     @Override

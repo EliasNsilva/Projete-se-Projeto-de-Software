@@ -79,7 +79,13 @@ public class Atividade implements GeradorID <Atividade>{
 
         System.out.print("Digite quantos Usuarios seram inseridos: ");
 
-        int n = input.nextInt();
+        int n = 0;
+        try {
+            n = input.nextInt();
+        } catch (Exception e) {
+            System.out.println("Insira somente números");
+        }
+        
         for(int i = 0; i < n; i++){
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();

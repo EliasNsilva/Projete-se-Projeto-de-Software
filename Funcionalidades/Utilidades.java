@@ -41,7 +41,6 @@ public abstract class Utilidades {
                     }
                 } catch (Exception e){
                     System.out.println("Digite somente o número referente a opção\n");
-                    consultaProj(projetos, usuarios);
                 }
                 break;
             case "2":
@@ -105,7 +104,6 @@ public abstract class Utilidades {
             }
         } catch (Exception e){
             System.out.println("Digite somente o número referente a opção\n");
-            consultaAtiv(projetos);
         }
 
     }
@@ -169,9 +167,9 @@ public abstract class Utilidades {
 
     public static void associarProjeto(ArrayList<Projeto> projetos, ArrayList<Usuario> usuarios){
         System.out.println("1- Associar um projeto a um usuário\n2- Associar Usuários a um projeto");
-        int escolha = input.nextInt();
+        String escolha = input.next();
 
-        if (escolha == 1) {       
+        if (escolha == "1") {       
             System.out.print("Digite o cpf do Usuario: ");
             String part_cpf = input.next();
             Usuario user = buscaPorCpf(part_cpf, usuarios);
@@ -192,12 +190,11 @@ public abstract class Utilidades {
                 proj = projetos.get(p);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarProjeto(projetos, usuarios);
             }
 
             proj.setUsuarios(user);
 
-        }else if(escolha == 2){
+        }else if(escolha == "2"){
             System.out.println("Qual projeto deseja associar?\n");
 
             for(Projeto i: projetos){
@@ -211,7 +208,6 @@ public abstract class Utilidades {
                 proj = projetos.get(p);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarProjeto(projetos, usuarios);
             }
 
             System.out.print("Digite o cpf do Usuario: ");
@@ -224,13 +220,16 @@ public abstract class Utilidades {
 
             proj.setUsuarios(user);
         }
+        else {
+            System.out.println("Opção inválida");
+        }
     }
 
     public static void associarAtividade(ArrayList<Projeto> projetos, ArrayList<Usuario> usuarios){
         System.out.println("1- Associar um atividade a um usuário\n2- Associar Usuários a uma atividade");
-        int escolha = input.nextInt();
+        String escolha = input.next();
 
-        if (escolha == 1) {       
+        if (escolha == "1") {       
             System.out.println("Qual projeto a atividade pertence?\n");
 
             for(Projeto i: projetos){
@@ -244,7 +243,6 @@ public abstract class Utilidades {
                 proj = projetos.get(p);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarAtividade(projetos, usuarios);
             }
 
             System.out.print("Digite o cpf do Usuario: ");
@@ -268,12 +266,11 @@ public abstract class Utilidades {
                 
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarAtividade(projetos, usuarios);
             }
 
             ativ.getProfissionais().add(user);
 
-        }else if(escolha == 2){
+        }else if(escolha == "2"){
             System.out.println("Qual projeto a atividade pertence?\n");
 
             for(Projeto i: projetos){
@@ -287,7 +284,6 @@ public abstract class Utilidades {
                 proj = projetos.get(p);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarAtividade(projetos, usuarios);
             }
 
 
@@ -304,7 +300,6 @@ public abstract class Utilidades {
                 
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                associarAtividade(projetos, usuarios);
             }
 
             System.out.print("Digite o cpf do Usuario: ");
@@ -317,6 +312,9 @@ public abstract class Utilidades {
             else{
                 ativ.getProfissionais().add(user);
             }
+        }
+        else {
+            System.out.println("Opção inválida");
         }
     }
 
@@ -333,7 +331,6 @@ public abstract class Utilidades {
             proj = projetos.get(p);
         } catch (Exception e) {
             System.out.println("Digite somente o número referente a opção\n");
-            intercambio(projetos);
         }
 
         System.out.print("Digite o cpf do Usuario que seja adicionar: ");
@@ -356,7 +353,6 @@ public abstract class Utilidades {
                 proj2 = projetos.get(p);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                intercambio(projetos);
             }
 
             System.out.println("Qual atividade deseja adicionar o usuário?\n");
@@ -371,7 +367,6 @@ public abstract class Utilidades {
                 ativ = proj2.ativs.get(ativ_res);
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
-                intercambio(projetos);
             }
 
             ativ.getProfissionais().add(user);
@@ -395,14 +390,20 @@ public abstract class Utilidades {
             proj = projetos.get(p);
         } catch (Exception e) {
             System.out.println("Digite somente o número referente a opção\n");
-            bolsas(projetos);
+            return;
         }
 
         System.out.printf("Qual tipo de usuário deseja pagar?:\n");
         System.out.println("1- Alunos de Graduação\n2- Alunos de mestrado\n3- Alunos de doutorado");
         System.out.println("4- Professores\n5- Pesquisadores\n6- Desenvolvedores\n7- Testadores\n8- Analistas\n9- Técnicos");
-        int res = input.nextInt();
         String cargo = "";
+        int res = 0;
+
+        try {
+            res = input.nextInt();
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
+        }
 
         switch (res) {
             case 1:
@@ -433,6 +434,7 @@ public abstract class Utilidades {
                 cargo = "Técnico";
                 break;
             default:
+                System.out.println("Opção inválida");
                 break;
         }
 
@@ -508,9 +510,9 @@ public abstract class Utilidades {
 
     public static Usuario login(ArrayList<Usuario> Usuarios){
         System.out.println("1- Login\n2- Logout");
-        int res = input.nextInt();
+        String res = input.next();
         switch (res) {
-            case 1:
+            case "1":
             System.out.print("Digite o cpf ou ''eita'' Caso tenha esquecido a senha:\n");
             String loginCpf = input.next();
     
@@ -523,7 +525,7 @@ public abstract class Utilidades {
                 
                 if(user == null){
                     System.out.println("Usuário não encontrado, tente novamente");
-                    login(Usuarios);
+
                 }
                 else{
                     System.out.print("Digite o senha: ");
@@ -538,7 +540,7 @@ public abstract class Utilidades {
                 }
             }
                 break;
-            case 2:
+            case "2":
                 return null;
         
             default:

@@ -9,10 +9,6 @@ import Funcionalidades.Utilidades;
 
 import java.util.ArrayList;
 
-//TO DO 
-// input.nextInt(); colocar em try catch
-// login bugado
-
 public class Sistema extends Utilidades{
     static Scanner input = new Scanner(System.in).useDelimiter("\n");
     static Usuario user;
@@ -139,10 +135,10 @@ public class Sistema extends Utilidades{
                     }
                     System.out.println("\n#########################\n");
                     System.out.println("1- Associar projeto\n2- Associar atividade");
-                    int associar = input.nextInt();
-                    if(associar == 1){
+                    String associar = input.next();
+                    if(associar == "1"){
                         associarProjeto(projetos, Usuarios);
-                    }else if(associar == 2){
+                    }else if(associar == "2"){
                         associarAtividade(projetos, Usuarios);
                     }
                     System.out.println("\n#########################\n");

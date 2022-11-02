@@ -106,7 +106,7 @@ public class Criar extends Utilidades{
     }
 
     public static Atividade criarAtividades(ArrayList<Atividade> atividades, ArrayList<Usuario> Usuarios) {
-        System.out.print("Digite o descrição: ");
+        System.out.print("\nDigite o descrição da atividade: ");
         String desc = input.next();
         
         
@@ -135,12 +135,12 @@ public class Criar extends Utilidades{
 
     public static ArrayList<Atividade> addAtividades(ArrayList<Usuario> Usuarios){
         ArrayList<Atividade> ativ_proj = new ArrayList<Atividade>();
-        System.out.print("Digite o quantas atividades seram inseridas: ");
+        System.out.print("\nDigite quantas atividades seram inseridas: ");
         int n = 0;
         try {
             n = input.nextInt();
         } catch (Exception e) {
-            System.out.println();
+            System.out.println("Certifique-se de digitar somente números");
         }
 
         for(int i = 0; i < n; i++){
@@ -152,11 +152,17 @@ public class Criar extends Utilidades{
     
     public static ArrayList<Tarefas> addTarefas(ArrayList<Usuario> Usuarios){
         ArrayList<Tarefas> tarefas = new ArrayList<Tarefas>();
-        System.out.print("Digite o quantas tarefas seram inseridas: ");
-        int n = input.nextInt();
+        System.out.print("\nDigite quantas tarefas seram inseridas: ");
+
+        int n = 0;
+        try {
+            n = input.nextInt();
+        } catch (Exception e) {
+            System.out.println("Insira somente números");
+        }
 
         for(int i = 0; i < n; i++){
-            System.out.print("Digite o descrição: ");
+            System.out.print("Digite o descrição da tarefa: ");
             String desc = input.next();
 
             System.out.print("Digite o cpf da pessoa que realizará a tarefa: ");

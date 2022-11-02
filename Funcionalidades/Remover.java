@@ -16,9 +16,12 @@ public class Remover {
             System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
-        int res = input.nextInt();
-
-        projetos.remove(res);
+        try {
+            int res = input.nextInt();
+            projetos.remove(res);
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
+        }
 
         System.out.println("\nRemovido!\n\n");
     }
@@ -30,18 +33,22 @@ public class Remover {
             System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
-        int res = input.nextInt();
+        try {
+            int res = input.nextInt();
 
-        Projeto proj = projetos.get(res);
+            Projeto proj = projetos.get(res);
 
-        System.out.println("Qual ativiade deseja remover?\n");
-        for(Atividade i: proj.ativs){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+            System.out.println("Qual ativiade deseja remover?\n");
+            for(Atividade i: proj.ativs){
+                System.out.printf("%d- %s\n", i.id, i.descricao);
+            }
+
+            int ativ = input.nextInt();
+
+            proj.ativs.remove(ativ);
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
         }
-
-        int ativ = input.nextInt();
-
-        proj.ativs.remove(ativ);
 
         System.out.println("\nRemovida!\n\n");
     }
@@ -53,23 +60,27 @@ public class Remover {
             System.out.printf("%d- %s\n", i.id, i.getDescricao());
         }
 
-        int res = input.nextInt();
-
-        Projeto proj = projetos.get(res);
-
-        System.out.println("Qual atividade a tarefa pertence?\n");
-        for(Atividade i: proj.ativs){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
+        try {
+            int res = input.nextInt();
+    
+            Projeto proj = projetos.get(res);
+    
+            System.out.println("Qual atividade a tarefa pertence?\n");
+            for(Atividade i: proj.ativs){
+                System.out.printf("%d- %s\n", i.id, i.descricao);
+            }
+    
+            int ativ = input.nextInt();
+    
+            System.out.println("Qual tarefa deseja remover?\n");
+            for(Tarefas i: proj.ativs.get(ativ).tarefas){
+                System.out.printf("%d- %s\n", i.id, i.descricao);
+            }
+    
+            proj.ativs.remove(ativ);
+        } catch (Exception e) {
+            System.out.println("Digite somente o número referente a opção\n");
         }
-
-        int ativ = input.nextInt();
-
-        System.out.println("Qual tarefa deseja remover?\n");
-        for(Tarefas i: proj.ativs.get(ativ).tarefas){
-            System.out.printf("%d- %s\n", i.id, i.descricao);
-        }
-
-        proj.ativs.remove(ativ);
 
         System.out.println("\nRemovida!\n\n");
     }
