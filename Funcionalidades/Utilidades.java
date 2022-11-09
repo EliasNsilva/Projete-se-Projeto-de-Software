@@ -123,9 +123,7 @@ public abstract class Utilidades {
 
                 for(Usuario user: usuarios){
                     if(user.getNome().equals(campo)){
-                        System.out.printf("Nome : %s\n", user.getNome());
-                        System.out.printf("CPF : %s\n", user.getCpf());
-                        System.out.printf("Cargo : %s\n", user.getCargo());
+                        user.toString();
                         return;
                     }
                 }
@@ -138,9 +136,7 @@ public abstract class Utilidades {
 
                 for(Usuario user: usuarios){
                     if(user.getCargo().equals(campo)){
-                        System.out.printf("Nome : %s\n", user.getNome());
-                        System.out.printf("CPF : %s\n", user.getCpf());
-                        System.out.printf("Cargo : %s\n", user.getCargo());
+                        user.toString();
                         return;
                     }
                 }
@@ -152,9 +148,7 @@ public abstract class Utilidades {
 
                 for(Usuario user: usuarios){
                     if(user.getCpf().equals(campo)){
-                        System.out.printf("Nome : %s\n", user.getNome());
-                        System.out.printf("CPF : %s\n", user.getCpf());
-                        System.out.printf("Cargo : %s\n", user.getCargo());
+                        user.toString();
                         return;
                     }
                 }

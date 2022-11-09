@@ -25,6 +25,15 @@ Funcionalidade pendente:
 2. ```java Sistema```
 
 Code Smells encontrados:
+
+* Duplicated Code
+    
+    Codigo utilizado para mostrar todos os Projetos e seus Ids, sendo também utilizado para Atividades
+
+    ```Java
+        System.out.printf("%d- %s\n", i.id, i.getDescricao());
+    ```
+
 * Large Class:
 
     [Utilidades](/Funcionalidades/Utilidades.java/)
