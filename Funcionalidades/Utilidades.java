@@ -161,61 +161,65 @@ public abstract class Utilidades {
 
     public static void associarProjeto(ArrayList<Projeto> projetos, ArrayList<Usuario> usuarios){
         System.out.println("1- Associar um projeto a um usuário\n2- Associar Usuários a um projeto");
-        String escolha = input.next();
+        String escolha = input.nextLine();
+        Projeto proj = null;
 
-        if (escolha == "1") {       
-            System.out.print("Digite o cpf do Usuario: ");
-            String part_cpf = input.next();
-            Usuario user = buscaPorCpf(part_cpf, usuarios);
+        switch (escolha) {
+            case "1":
+                System.out.print("Digite o cpf do Usuario: ");
+                String part_cpf = input.next();
+                Usuario user = buscaPorCpf(part_cpf, usuarios);
 
-            if(user == null){
-                System.out.println("Usuário não encontrado");
-            }
-            System.out.println("Qual projeto deseja associar a esse usuario?\n");
+                if(user == null){
+                    System.out.println("Usuário não encontrado");
+                }
+                System.out.println("Qual projeto deseja associar a esse usuario?\n");
 
-            for(Projeto i: projetos){
-                System.out.printf("%d- %s\n", i.id, i.getDescricao());
-            }
+                for(Projeto i: projetos){
+                    System.out.printf("%d- %s\n", i.id, i.getDescricao());
+                }
+            
+                proj = null;
+
+                try {
+                    int p = input.nextInt();
+                    proj = projetos.get(p);
+                } catch (Exception e) {
+                    System.out.println("Digite somente o número referente a opção\n");
+                }
+
+                proj.setUsuarios(user);
+                break;
+            case "2":
+                System.out.println("Qual projeto deseja associar?\n");
+
+                for(Projeto i: projetos){
+                    System.out.printf("%d- %s\n", i.id, i.getDescricao());
+                }
+
+                proj = null;
+
+                try {
+                    int p = input.nextInt();
+                    proj = projetos.get(p);
+                } catch (Exception e) {
+                    System.out.println("Digite somente o número referente a opção\n");
+                }
+
+                System.out.print("Digite o cpf do Usuario: ");
+                String user_cpf = input.next();
+                Usuario user2 = buscaPorCpf(user_cpf, usuarios);
+
+                if(user2 == null){
+                    System.out.println("Usuário não encontrado");
+                }
+
+                proj.setUsuarios(user2);
+                break;
         
-            Projeto proj = null;
-
-            try {
-                int p = input.nextInt();
-                proj = projetos.get(p);
-            } catch (Exception e) {
-                System.out.println("Digite somente o número referente a opção\n");
-            }
-
-            proj.setUsuarios(user);
-
-        }else if(escolha == "2"){
-            System.out.println("Qual projeto deseja associar?\n");
-
-            for(Projeto i: projetos){
-                System.out.printf("%d- %s\n", i.id, i.getDescricao());
-            }
-
-            Projeto proj = null;
-
-            try {
-                int p = input.nextInt();
-                proj = projetos.get(p);
-            } catch (Exception e) {
-                System.out.println("Digite somente o número referente a opção\n");
-            }
-
-            System.out.print("Digite o cpf do Usuario: ");
-            String part_cpf = input.next();
-            Usuario user = buscaPorCpf(part_cpf, usuarios);
-
-            if(user == null){
-                System.out.println("Usuário não encontrado");
-            }
-
-            proj.setUsuarios(user);
-        }
-        else {
-            System.out.println("Opção inválida");
+            default:
+                System.out.println("Opção inválida");
+                break;
         }
     }
 
