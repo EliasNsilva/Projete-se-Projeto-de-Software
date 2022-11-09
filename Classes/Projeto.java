@@ -144,8 +144,8 @@ public class Projeto implements GeradorID<Projeto>{
 
         if(proj.status.equals("Em processo de criação")){
             System.out.println("Deseja inicar o projeto?\n\n1- Sim\n2- Não");
-            int res = input.nextInt();
-            if(res == 1){
+            String res = input.next();
+            if(res == "1"){
                 if(proj.descricao != null && proj.data_inicio != null && proj.coordenador != null){
                     proj.status = "Iniciado";
                 }
@@ -153,20 +153,22 @@ public class Projeto implements GeradorID<Projeto>{
                     System.out.println("O projeto não possuí informações suficientes.");
                 }
             }
+            else return;
         }
         else if(proj.status.equals("Iniciado")){
             System.out.println("Deseja dar andamento ao projeto?\n\n1- Sim\n2- Não");
-            int res = input.nextInt();
-            if(res == 1){
+            String res = input.next();
+            if(res == "1"){
                 if(proj.Usuarios != null ){
                     proj.status = "Em andamento";
                 }
             }
+            else return;
         }
         else if(proj.status.equals("Em andamento")){
             System.out.println("Deseja concluir o projeto?\n\n1- Sim\n2- Não");
-            int res = input.nextInt();
-            if(res == 1){
+            String res = input.next();
+            if(res == "1"){
                 if(proj.ativs != null && proj.data_final != null){
                     proj.status = "Concluído";
                 }
@@ -174,6 +176,7 @@ public class Projeto implements GeradorID<Projeto>{
                     System.out.println("O projeto não possuí informações suficientes.");
                 }
             }
+            else return;
         }
     }
 

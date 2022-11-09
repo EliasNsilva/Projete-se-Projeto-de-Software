@@ -1,7 +1,7 @@
 # Projete-se
 Projeto desenvolvido na disciplina projeto de software.
 
-O Projete-se é um sistema de gerenciamento de projetos, permitindo a criação e gerencia de dos mesmos.
+O Projete-se é um sistema de gerenciamento de projetos, permitindo a criação e gerencia dos mesmos.
 
 Funcionalidades implementadas:
 
@@ -23,3 +23,23 @@ Funcionalidade pendente:
 
 1. ```javac Sistema.java```
 2. ```java Sistema```
+
+Code Smells encontrados:
+* Large Class:
+
+    [Utilidades](/Funcionalidades/Utilidades.java/)
+* Primitive Obsession
+
+    Campo [profissonal](/Classes/Tarefas.java), armazenando uma string que é referente a um Usuário
+    ```Java
+    public class Tarefas implements GeradorID <Tarefas>{
+    public int id;
+    public String descricao;
+    public String profissonal;
+    ```
+
+* Speculative Generality
+    
+    A Classe [Usuário](/Classes/Usuario.java) só pussuí uma sub-classe [Aluno](/Classes/Aluno.java)
+
+ 
