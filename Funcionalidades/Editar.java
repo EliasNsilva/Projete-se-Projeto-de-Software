@@ -6,6 +6,8 @@ import Classes.Atividade;
 import Classes.Projeto;
 import Classes.Usuario;
 
+import Funcionalidades.Criar;
+
 public class Editar extends Utilidades{
     static Scanner input = new Scanner(System.in).useDelimiter("\n");
     
@@ -25,7 +27,7 @@ public class Editar extends Utilidades{
             System.out.println("Digite somente o número referente a opção\n");
         }
 
-        System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final");
+        System.out.println("Qual campo deseja editar?\n1- Descrição\n2- Data inicio\n3- Data Final\n4- Adicionar atividade\n");
         String j = input.next();
         switch (j) {
             case "1":
@@ -43,6 +45,8 @@ public class Editar extends Utilidades{
                 String res3 = input.next();
                 proj.setDataFinal(res3);
                 break;
+            case "4":
+                proj.ativs.add(Criar.criarAtividades(proj.ativs, proj.getUsuarios()));
             default:
                 break;
         }

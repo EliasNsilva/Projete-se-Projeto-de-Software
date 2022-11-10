@@ -239,6 +239,10 @@ public abstract class Utilidades {
             try {
                 int p = input.nextInt();
                 proj = projetos.get(p);
+                if (proj.ativs == null){
+                    System.out.println("Projeto sem atividades\n");
+                    return;
+                }
             } catch (Exception e) {
                 System.out.println("Digite somente o número referente a opção\n");
             }
@@ -530,6 +534,7 @@ public abstract class Utilidades {
                     String loginSenha = input.next();
         
                     if(loginSenha.equals(user.getSenha())){
+                        System.out.println("\nLogado!\n");
                         return user;
                     }
                     else{

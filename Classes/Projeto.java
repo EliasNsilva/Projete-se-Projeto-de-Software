@@ -147,7 +147,6 @@ public class Projeto implements GeradorID<Projeto>{
             String res = input.next();
             switch (res) {
                 case "1":
-                    System.out.println("TESTANDO");
                     if(proj.descricao != null && proj.data_inicio != null && proj.coordenador != null){
                         this.status = "Iniciado";
                     }
