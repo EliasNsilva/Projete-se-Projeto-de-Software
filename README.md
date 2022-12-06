@@ -37,6 +37,9 @@ Code Smells encontrados:
 * Large Class:
 
     [Utilidades](/Funcionalidades/Utilidades.java/)
+
+    *Solução*: Extract Class
+    
 * Primitive Obsession
 
     Campo [profissonal](/Classes/Tarefas.java), armazenando uma string que é referente a um Usuário
@@ -47,8 +50,12 @@ Code Smells encontrados:
     public String profissonal;
     ```
 
+    *Solução*: Replace Data Value with Object
+
 * Speculative Generality
     
     A Classe [Usuário](/Classes/Usuario.java) só pussuí uma sub-classe [Aluno](/Classes/Aluno.java)
+    
+    *Solução*: Collapse Hierarchy
 
  

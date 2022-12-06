@@ -83,23 +83,22 @@ public class Projeto implements GeradorID<Projeto>{
         }
     }
 
-    public Usuario setCoordenador(ArrayList<Usuario> Usuarios){
+    public void setCoordenador(ArrayList<Usuario> Usuarios){
         Scanner input = new Scanner(System.in).useDelimiter("\n");
 
-        System.out.print("Insira o cpf do coordenador do projeto: ");
-        String coordenador_cpf = input.next();
-
-        Usuario user = Utilidades.buscaPorCpf(coordenador_cpf, Usuarios);
-
-        if(user == null){
-            System.out.println("Usuário não existente, tente novamente!");
-            setCoordenador(Usuarios);
+        while(true){
+            System.out.print("Insira o cpf do coordenador do projeto: ");
+            String coordenador_cpf = input.next();
+            Usuario user = Utilidades.buscaPorCpf(coordenador_cpf, Usuarios);
+            
+            if (user != null){
+                this.coordenador = user;
+                break;
+            } 
+            else{
+                System.out.println("Usuário não existente, tente novamente!");
+            }  
         }
-        else{
-            this.coordenador = user;
-            return user;
-        }
-        return null;
     }
 
     // OVERLOAD

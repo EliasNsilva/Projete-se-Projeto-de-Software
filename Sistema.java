@@ -6,6 +6,9 @@ import Funcionalidades.Criar;
 import Funcionalidades.Editar;
 import Funcionalidades.Remover;
 import Funcionalidades.Utilidades;
+import Funcionalidades.Login;
+import Funcionalidades.Consultas;
+import Funcionalidades.Associar;
 
 import java.util.ArrayList;
 
@@ -137,9 +140,9 @@ public class Sistema extends Utilidades{
                     System.out.println("1- Associar projeto\n2- Associar atividade");
                     String associar = input.next();
                     if(associar == "1"){
-                        associarProjeto(projetos, Usuarios);
+                        Associar.associarProjeto(projetos, Usuarios);
                     }else if(associar == "2"){
-                        associarAtividade(projetos, Usuarios);
+                        Associar.associarAtividade(projetos, Usuarios);
                     }
                     System.out.println("\n#########################\n");
                     break;
@@ -178,13 +181,13 @@ public class Sistema extends Utilidades{
                     String l = input.next();
                     switch (l) {
                         case "1":
-                            consultaProj(projetos, Usuarios); 
+                            Consultas.consultaProj(projetos, Usuarios); 
                             break;
                         case "2":
-                            consultaAtiv(projetos);
+                            Consultas.consultaAtiv(projetos);
                             break;
                         case "3":
-                            consultaUsu(Usuarios);
+                            Consultas.consultaUsu(Usuarios);
                             break;
                         default:
                             break;
@@ -224,7 +227,7 @@ public class Sistema extends Utilidades{
                     break;
                 case "9":
                     System.out.println("\n#########################\n");
-                    user = login(Usuarios);
+                    user = Login.login(Usuarios);
                     System.out.println("\n#########################\n");
                     break;
                 case "10":
@@ -233,7 +236,7 @@ public class Sistema extends Utilidades{
                     break;
                 case "0":
                     System.out.println("\nAté mais! :)");
-                    break;
+                    return;
                 default:
                     break;
             }

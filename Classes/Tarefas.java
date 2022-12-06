@@ -6,10 +6,9 @@ import Funcionalidades.GeradorID;
 public class Tarefas implements GeradorID <Tarefas>{
     public int id;
     public String descricao;
-    public String profissonal;
+    public Usuario profissonal;
 
-    public Tarefas(int id, String descricao, String profissional){
-        this.id = id;
+    public Tarefas(String descricao, Usuario profissional){
         this.descricao = descricao;
         this.profissonal = profissional;
     }

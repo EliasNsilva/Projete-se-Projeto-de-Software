@@ -2,7 +2,6 @@ package Funcionalidades;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Classes.Aluno;
 import Classes.Atividade;
 import Classes.Projeto;
 import Classes.Tarefas;
@@ -27,10 +26,10 @@ public class Criar extends Utilidades{
         
         pj.setID(projetos);
         
-        Usuario coordenador = pj.setCoordenador(Usuarios);
+        pj.setCoordenador(Usuarios);
         
         ArrayList<Usuario> part_proj = pj.setUsuarios(Usuarios);
-        part_proj.add(coordenador);
+        part_proj.add(pj.getCoordenador());
         
         ArrayList<Atividade> ativ_proj = addAtividades(part_proj);
         pj.ativs = ativ_proj;
@@ -90,12 +89,15 @@ public class Criar extends Utilidades{
                 break;
         }
 
-        if (cargo.equals("Aluno de Graduação") || cargo.equals("Aluno de mestrado") || cargo.equals("Aluno de doutorado")){
+        if (cargo.equals("Aluno de Graduação") || cargo.equals("Aluno de mestrado") || cargo.equals("Aluno de doutorado")){            
+            Usuario part = new Usuario(cpf, senha, nome, cargo);
+            
             System.out.print("Digite a matricula: ");
             String matricula = input.next( );
-            // Polimorfismo
-            Usuario part = new Aluno(cpf, senha, nome, cargo, matricula);
+            part.setMatricula(matricula);
+            
             Usuarios.add(part);
+
             return part;
         }
         else{
@@ -167,8 +169,10 @@ public class Criar extends Utilidades{
 
             System.out.print("Digite o cpf da pessoa que realizará a tarefa: ");
             String cpf = input.next();
+            Usuario resp = buscaPorCpf(cpf, Usuarios);
 
-            Tarefas tf = new Tarefas(i, desc, cpf); 
+            Tarefas tf = new Tarefas(desc, resp); 
+            tf.setID(tarefas);
             tarefas.add(tf);
         }
         return tarefas;

@@ -5,6 +5,7 @@ public class Usuario {
     private String senha;
     private String nome;
     private String cargo;
+    private String matricula;
     public int recebido;
     
     public Usuario(String cpf, String senha, String nome, String cargo) {
@@ -25,6 +26,14 @@ public class Usuario {
     }
     public String getSenha(){
         return senha;
+    }
+    
+    public String getMatricula(){
+        return matricula;
+    }
+
+    public void setMatricula(String matricula){
+        this.matricula = matricula;
     }
 
     public void atualizarSenha(String senha){
