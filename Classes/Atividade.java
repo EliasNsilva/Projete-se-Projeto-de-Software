@@ -17,10 +17,9 @@ public class Atividade implements GeradorID <Atividade>{
     private ArrayList<Usuario> profissionais;
     public ArrayList<Tarefas> tarefas;
     
-    public Atividade(String status, String descricao, Usuario responsavel, ArrayList<Tarefas> tarefas) {
+    public Atividade(String status, String descricao, ArrayList<Tarefas> tarefas) {
         this.status = status;
         this.descricao = descricao;
-        this.responsavel = responsavel;
         this.tarefas = tarefas;
     }
 
@@ -73,6 +72,24 @@ public class Atividade implements GeradorID <Atividade>{
             System.out.println("Formato da data errada!");
         }
     }
+    public void setResponsavel(ArrayList<Usuario> Usuarios) {
+        Scanner input = new Scanner(System.in).useDelimiter("\n");
+        
+        while(true){
+            System.out.print("Insira o cpf do responsável pela atividades: ");
+            String responsavel_cpf = input.next();
+            Usuario user = Utilidades.buscaPorCpf(responsavel_cpf, Usuarios);
+            
+            if (user != null){
+                this.responsavel = user;
+                break;
+            } 
+            else{
+                System.out.println("Usuário não existente, tente novamente!");
+            }  
+        }
+    }
+
     public ArrayList<Usuario> setProfissionais(ArrayList<Usuario> Usuarios){
         ArrayList<Usuario> profs = new ArrayList<Usuario>();
         Scanner input = new Scanner(System.in).useDelimiter("\n");

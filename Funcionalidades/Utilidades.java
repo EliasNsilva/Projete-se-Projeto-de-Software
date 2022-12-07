@@ -175,9 +175,10 @@ public abstract class Utilidades {
                 System.out.printf("    Responsável %s\n", ativ.responsavel.getNome());
 
                 for(Tarefas tf: ativ.tarefas){
+                    System.out.printf("\n");
                     System.out.printf("    Tarefa %d\n", tf.id);
                     System.out.printf("    Descrição: %s\n", tf.descricao);
-                    System.out.printf("    Responsável %s\n", tf.profissonal);
+                    System.out.printf("    Responsável %s\n", tf.profissonal.getNome());
                 }
                 System.out.println("___________________________");
             }

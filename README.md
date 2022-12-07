@@ -24,16 +24,12 @@ Funcionalidade pendente:
 1. ```javac Sistema.java```
 2. ```java Sistema```
 
-Code Smells encontrados:
+## Code Smells encontrados:
 
-* Duplicated Code
-    
-    Codigo utilizado para mostrar todos os Projetos e seus Ids, sendo também utilizado para Atividades
+### Complexo:
+Foi utilizado o padrão Command para melhorar o entendimento da classe [Sistema](/Main/Sistema.java)
 
-    ```Java
-        System.out.printf("%d- %s\n", i.id, i.getDescricao());
-    ```
-
+### Simples: 
 * Large Class:
 
     [Utilidades](/Funcionalidades/Utilidades.java/)

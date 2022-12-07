@@ -16,11 +16,11 @@ public class Criar extends Utilidades{
         
         Projeto pj = new Projeto("Em processo de criação", descricao);
 
-        System.out.print("Insira a data de início do projeto: ");
+        System.out.print("Insira a data de início do projeto (dd/MM/yyyy): ");
         String data_inicio = input.next();
         pj.setDataInicio(data_inicio);
         
-        System.out.print("Insira a data de termino do projeto: ");
+        System.out.print("Insira a data de termino do projeto (dd/MM/yyyy): ");
         String data_final = input.next();
         pj.setDataFinal(data_final);
         
@@ -111,26 +111,23 @@ public class Criar extends Utilidades{
         System.out.print("\nDigite o descrição da atividade: ");
         String desc = input.next();
         
-        
-        System.out.print("Insira o cpf do responsavel pela atividade: ");
-        String resp_cpf = input.next();
-        Usuario resp = buscaPorCpf(resp_cpf, Usuarios);
-        
         ArrayList<Tarefas> tarefas = addTarefas(Usuarios);
-        Atividade ativ = new Atividade("Em andamento", desc, resp, tarefas);
+        Atividade ativ = new Atividade("Em andamento", desc, tarefas);
+
+        ativ.setResponsavel(Usuarios);
         
-        System.out.print("Insira a data de início da atividade: ");
+        System.out.print("Insira a data de início da atividade (dd/MM/yyyy): ");
         String dt_inicio = input.next();
         ativ.setDataInicio(dt_inicio);
 
-        System.out.print("Insira a data de termino da atividade: ");
+        System.out.print("Insira a data de termino da atividade (dd/MM/yyyy): ");
         String dt_final = input.next();
         ativ.setDataFinal(dt_final);
 
         ativ.setID(atividades);
 
         ArrayList<Usuario> profs = ativ.setProfissionais(Usuarios);
-        profs.add(resp);
+        profs.add(ativ.responsavel);
 
         return ativ;
     }
